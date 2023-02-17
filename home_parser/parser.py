@@ -31,7 +31,7 @@ class MyHomeParser:
                 self.description['image_url'].append(card.find('img', class_='card-img')['data-src'])
                 self.description['title'].append(card.find('h5', class_='card-title').text)
                 self.description['price'].append(card.find('b', {'class': 'item-price-usd'}).text)
-                self.description['square'].append(card.find('div', {'class': 'item-size'}))
+                self.description['square'].append(card.find('div', {'class': 'item-size'}).text)
 
     def save_to_env(self):
         os.environ['HOMES_URL'] = ','.join(self.homes_url)
