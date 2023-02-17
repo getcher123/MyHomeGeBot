@@ -32,7 +32,7 @@ async def check_new_houses(dp:Dispatcher, sleep_time: int):
         else:
             continue
         for i, url in enumerate(p.homes_url):
-            msg = f"**[{p.description['title'][i]}]({url})** - ${p.description['price'][i]}"
+            msg = f"**[{p.description['title'][i]}]({url})** - ${p.description['price'][i]} {p.description['square'][i]}m²"
            
             
             
@@ -41,7 +41,6 @@ async def check_new_houses(dp:Dispatcher, sleep_time: int):
             response = requests.get(image_url)
             image_bytes = BytesIO(response.content)
             user_ids = os.environ.get('USER_IDS', '').split(',')
-            logging.info('user_ids = ', user_ids)
             logging.info(f'{user_ids = }')
             for user_id in user_ids:
                 try:
