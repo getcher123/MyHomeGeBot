@@ -34,7 +34,6 @@ class MyHomeParser:
                 self.description['square'].append(card.find('div', {'class': 'item-size'}).text)
                 self.description['stairs'].append(card.select_one('.options-texts span').text)
                 self.description['address'].append(card.find('div', class_='address').text)
-floor = soup.select_one('.options-texts span').text
     def save_to_env(self):
         os.environ['HOMES_URL'] = ','.join(self.homes_url)
 
