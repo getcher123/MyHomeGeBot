@@ -32,8 +32,6 @@ class MyHomeParser:
                 self.description['title'].append(card.find('h5', class_='card-title').text)
                 self.description['price'].append(card.find('b', {'class': 'item-price-usd'}).text)
                 self.description['square'].append(card.find('div', {'class': 'item-size'}))
-                logging.info(f'{card = }')
-
 
     def save_to_env(self):
         os.environ['HOMES_URL'] = ','.join(self.homes_url)
