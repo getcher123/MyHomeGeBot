@@ -32,7 +32,7 @@ async def check_new_houses(dp:Dispatcher, sleep_time: int):
         else:
             continue
         for i, url in enumerate(p.homes_url):
-            msg = f"**[{p.description['title'][i]}]({url})** - *${p.description['price'][i]}* {p.description['square'][i]} {p.description['stairs'][i]} \n {p.description['address'][i]}"
+            msg = f"**[{p.description['title'][i]}]({url})** - \n*${p.description['price'][i]}*     {p.description['square'][i]}     {p.description['stairs'][i]} \n{p.description['address'][i]}"
            
             
             
