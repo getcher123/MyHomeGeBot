@@ -3,6 +3,7 @@ import logging
 import os
 from io import BytesIO
 
+
 import requests
 from aiogram.dispatcher import Dispatcher
 
@@ -45,9 +46,10 @@ async def check_new_houses(dp: Dispatcher, sleep_time: int):
             image_bytes = BytesIO(response.content)
             user_ids = os.environ.get('USER_IDS', '').split(',')
 
+
             for user_id in user_ids:
                 try:
                     logging.info(f'# send_photo {user_id = }')
                     await dp.bot.send_photo(user_id, photo=image_bytes, caption=msg, parse_mode="Markdown")
                 except Exception as e:
-                    print(e)
+                    logging.exception('Sending msg error')
