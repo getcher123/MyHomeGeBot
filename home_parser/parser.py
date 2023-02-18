@@ -49,7 +49,7 @@ class MyHomeParser:
         logging.debug(f"Extends ... {self.homes_url.extend(self.old_url) = }")
 
         if(self.old_url):
-             logging.debug("Old url is not empty")
+            logging.debug("Old url is not empty")
             os.environ['HOMES_URL'] = ','.join(self.homes_url.extend(self.old_url))
         else:
             os.environ['HOMES_URL'] = ','.join(self.homes_url)
