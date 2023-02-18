@@ -22,7 +22,7 @@ class MyHomeParser:
         self.homes_url = []
         self.description = {'image_url': [], 'title': [], 'price': [], 'square': [], 'stairs': [], 'address': []}
         self.old_url = os.environ.get('HOMES_URL', '').split(',')
-        if(not self.old_url): 
+        if any(self.old_url): 
             self.first_time = True;
             logging.debug("First time starting")
 
