@@ -22,8 +22,8 @@ class MyHomeParser:
         self.homes_url = []
         self.description = {'image_url': [], 'title': [], 'price': [], 'square': [], 'stairs': [], 'address': []}
         self.old_url = os.environ.get('HOMES_URL', '').split(',')
-        if any(self.old_url): 
-            self.first_time = True;
+        if not any(self.old_url):
+            self.first_time = True
             logging.debug("First time starting")
 
     def get_cards(self):
