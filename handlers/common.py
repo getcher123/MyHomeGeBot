@@ -62,11 +62,12 @@ class CommonHandlers:
                 MESSAGES['set_link']
         )
 
-    async def unknown(message: types.Message, state: FSMContext) -> None:
+    async def update_link(message: types.Message, state: FSMContext) -> None:
         async with state.proxy() as data:
             data['url'] = message.text
         # Save the URL to an environment variable
-        os.environ['URL'] = data['url']
+        os.environ['URL'] = message.text
+        logging.debug(f"{os.environ['URL'] = }")
         await state.finish()
         await message.answer(
             MESSAGES['link_updated']
@@ -82,5 +83,7 @@ def register_client_handlers(dp: Dispatcher) -> None:
     dp.register_message_handler(CommonHandlers.start_command, commands=['start'])
     dp.register_message_handler(CommonHandlers.help_command, commands=['help'])
     dp.register_message_handler(CommonHandlers.set_link, commands=['set_link'])
-    dp.register_message_handler(CommonHandlers.cancel_command, commands=['cancel'])
-    dp.register_message_handler(CommonHandlers.unknown)
+    dp.register_message_handler(CommonHandlers.set_link,  lambda message: message.text in ['Задать ссылку для поиска', 'Обновить ссылку для поиска'])
+    
+    dp.register_message_handler(CommonHandlers.cancel_command, commands=['cancel'], state='*')
+    dp.register_message_handler(CommonHandlers.update_link, state=Form.url)
