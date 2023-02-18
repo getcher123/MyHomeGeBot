@@ -51,7 +51,7 @@ async def check_new_houses(dp: Dispatcher, sleep_time: int):
             response = requests.get(image_url)
             user_ids = os.environ.get('USER_IDS', '').split(',')
             if not user_ids:
-                logging.exception('Users ID is not founded')
+                logging.error('Users ID is not founded')
                 continue
 
             for user_id in user_ids:
