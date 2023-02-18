@@ -68,6 +68,7 @@ class CommonHandlers:
         # Save the URL to an environment variable
         os.environ['URL'] = message.text
         logging.debug(f"{os.environ['URL'] = }")
+        os.environ['HOMES_URL'] = ""
         await state.finish()
         await message.answer(
             MESSAGES['link_updated']
