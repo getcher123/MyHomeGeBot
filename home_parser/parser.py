@@ -48,10 +48,10 @@ class MyHomeParser:
         logging.debug(f"Saving ... {self.homes_url= } {self.old_url= }")
         logging.debug(f"Extends ... {self.homes_url.extend(self.old_url) = }")
 
-        if len(self.old_url):
+        if not any(self.old_url):
             logging.debug("Old url is not empty")
             os.environ['HOMES_URL'] = ','.join(self.homes_url.extend(self.old_url))
-        else:
+        else:f
             os.environ['HOMES_URL'] = ','.join(self.homes_url)
 
     def __del__(self):
