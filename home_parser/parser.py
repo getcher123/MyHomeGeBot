@@ -22,7 +22,9 @@ class MyHomeParser:
         self.homes_url = []
         self.description = {'image_url': [], 'title': [], 'price': [], 'square': [], 'stairs': [], 'address': []}
         self.old_url = os.environ.get('HOMES_URL', '').split(',')
-        if(not self.old_url): self.first_time = True;
+        if(not self.old_url): 
+            self.first_time = True;
+            logging.debug("First time starting")
 
     def get_cards(self):
         all_cards = self.soup.select('div[class="statement-card"]')
@@ -32,6 +34,8 @@ class MyHomeParser:
         for card in self.cards:
             card_href = card.find('a').get('href')[:37]
             if card_href not in self.old_url:
+                logging.debug(f"Find unique url {card_href= }")
+
                 self.homes_url.append(card_href)
                 self.description['image_url'].append(card.find('img', class_='card-img')['data-src'])
                 self.description['title'].append(card.find('h5', class_='card-title').text)
@@ -41,6 +45,8 @@ class MyHomeParser:
                 self.description['address'].append(card.find('div', class_='address').text)
 
     def save_to_env(self):
+        logging.debug(f"Saving ... {self.homes_url= } {self.old_url= }")
+
         os.environ['HOMES_URL'] = ','.join(self.homes_url.extend(self.old_url))
 
     def __del__(self):
