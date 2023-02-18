@@ -87,7 +87,7 @@ class CommonHandlers:
                     logging.info(f'# send_photo {user_id = }')
                     image_bytes_copy = BytesIO(response.content)
                     image_bytes_copy.seek(0)
-                    await dp.bot.send_photo(user_id, photo=image_bytes_copy, caption=msg, parse_mode="Markdown")
+                    await message.bot.send_photo(user_id, photo=image_bytes_copy, caption=msg, parse_mode="Markdown")
                 except Exception as e:
                     logging.exception('Sending msg error')    
 
@@ -136,9 +136,7 @@ def register_client_handlers(dp: Dispatcher) -> None:
     dp.register_message_handler(CommonHandlers.start_command, commands=['start'])
     dp.register_message_handler(CommonHandlers.help_command, commands=['help'])
     dp.register_message_handler(CommonHandlers.set_link, commands=['set_link'])
-    dp.register_message_handler(CommonHandlers.show_all, commands=['show_all'])
-
+    dp.register_message_handler(CommonHandlers.show_all, commands=['show'])
     dp.register_message_handler(CommonHandlers.set_link,  lambda message: message.text in ['Задать ссылку для поиска', 'Обновить ссылку для поиска'])
-    
     dp.register_message_handler(CommonHandlers.cancel_command, commands=['cancel'], state='*')
     dp.register_message_handler(CommonHandlers.update_link, state=Form.url)
