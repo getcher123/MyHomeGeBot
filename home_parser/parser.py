@@ -1,9 +1,12 @@
+import logging
 import os
+
 import requests
 from bs4 import BeautifulSoup
-import logging
 
-logging.basicConfig(level=logging.INFO)
+from settings.debug_settings import LOGGING_LEVEL
+
+logging.basicConfig(level=LOGGING_LEVEL)
 
 class MyHomeParser:
     _headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
@@ -15,7 +18,7 @@ class MyHomeParser:
         self.soup = BeautifulSoup(self.request.text, 'lxml')
         self.cards = []
         self.homes_url = []
-        self.description = {'image_url':[], 'title':[], 'price':[], 'square':[], 'stairs':[], 'address':[]}
+        self.description = {'image_url': [], 'title': [], 'price': [], 'square': [], 'stairs': [], 'address': []}
 
         self.old_url = os.environ.get('HOMES_URL', '').split(',')
 
@@ -34,6 +37,8 @@ class MyHomeParser:
                 self.description['square'].append(card.find('div', {'class': 'item-size'}).text)
                 self.description['stairs'].append(card.select_one('.options-texts span').text)
                 self.description['address'].append(card.find('div', class_='address').text)
+                logging.debug(f'{card = }')
+
     def save_to_env(self):
         os.environ['HOMES_URL'] = ','.join(self.homes_url)
 
