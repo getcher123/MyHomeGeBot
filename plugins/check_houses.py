@@ -20,7 +20,7 @@ async def check_new_houses(dp: Dispatcher, sleep_time: int):
             continue
 
         p = MyHomeParser(url)
-        
+
         if p.status == 200:
             print(f'status code: {p.status}')
         else:
@@ -35,7 +35,7 @@ async def check_new_houses(dp: Dispatcher, sleep_time: int):
             continue
 
         for i, url in enumerate(p.homes_url):
-            msg = f"[**{p.description['title'][i]}**]({url}) - ${p.description['price'][i]}"
+            msg = f"**[{p.description['title'][i]}]({url})** - \n*${p.description['price'][i]}*     {p.description['square'][i]}     {p.description['stairs'][i]} \n{p.description['address'][i]}"
             image_url = p.description['image_url'][i]
 
             # Download the image and sends it
@@ -46,6 +46,7 @@ async def check_new_houses(dp: Dispatcher, sleep_time: int):
             logging.debug(f'{user_ids = }')
             for user_id in user_ids:
                 try:
-                    await dp.bot.send_photo(user_id, photo=image_bytes, caption=msg)
+                    logging.info(f'{user_id = }')
+                    await dp.bot.send_photo(user_id, photo=image_bytes, caption=msg, parse_mode="Markdown")
                 except Exception as e:
                     print(e)

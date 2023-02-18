@@ -1,10 +1,10 @@
-import logging
 import os
 
 import requests
 from bs4 import BeautifulSoup
 
 from settings.debug_settings import LOGGING_LEVEL
+
 logging.basicConfig(level=LOGGING_LEVEL)
 
 class MyHomeParser:
@@ -17,7 +17,7 @@ class MyHomeParser:
         self.soup = BeautifulSoup(self.request.text, 'lxml')
         self.cards = []
         self.homes_url = []
-        self.description = {'image_url':[], 'title':[], 'price':[]}
+        self.description = {'image_url': [], 'title': [], 'price': [], 'square': [], 'stairs': [], 'address': []}
 
         self.old_url = os.environ.get('HOMES_URL', '').split(',')
 
@@ -33,9 +33,10 @@ class MyHomeParser:
                 self.description['image_url'].append(card.find('img', class_='card-img')['data-src'])
                 self.description['title'].append(card.find('h5', class_='card-title').text)
                 self.description['price'].append(card.find('b', {'class': 'item-price-usd'}).text)
-
-                LOGGING_LEVEL(f'{card = }')
-
+                self.description['square'].append(card.find('div', {'class': 'item-size'}).text)
+                self.description['stairs'].append(card.select_one('.options-texts span').text)
+                self.description['address'].append(card.find('div', class_='address').text)
+                logging.debug(f'{card = }')
 
     def save_to_env(self):
         os.environ['HOMES_URL'] = ','.join(self.homes_url)
