@@ -47,6 +47,7 @@ async def check_new_houses(dp: Dispatcher, sleep_time: int):
             for user_id in user_ids:
                 try:
                     logging.info(f'# send_photo {user_id = }')
+                    image_bytes.seek(0)
                     await dp.bot.send_photo(user_id, photo=image_bytes, caption=msg, parse_mode="Markdown")
                 except Exception as e:
                     logging.exception('Sending msg error')
