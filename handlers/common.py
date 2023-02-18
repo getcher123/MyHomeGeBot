@@ -51,6 +51,8 @@ class CommonHandlers:
         Args:
             message (types.Message): Instance of the Message class.
         """
+        await message.answer("Feching ....!")
+
         url = os.environ.get('URL')
         if not url:
             logging.warning("# not url!")
