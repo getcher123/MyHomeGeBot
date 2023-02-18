@@ -70,10 +70,11 @@ class CommonHandlers:
         p.get_cards()
         p.get_homes_url_and_images()
 
-        if not len(p.homes_url):
+        if not any(p.old_url):
             return
 
-        for i, url in enumerate(p.homes_url):
+
+        for i, url in enumerate(p.old_url):
             msg = f"**[{p.description['title'][i]}]({url})** - \n*${p.description['price'][i]}*     {p.description['square'][i]}     {p.description['stairs'][i]} \n{p.description['address'][i]}"
             image_url = p.description['image_url'][i]
 
