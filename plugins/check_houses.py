@@ -17,15 +17,17 @@ async def check_new_houses(dp: Dispatcher, sleep_time: int):
         await asyncio.sleep(sleep_time)
         url = os.environ.get('URL')
         if not url:
+            logging.warning("# not url!")
             continue
 
         p = MyHomeParser(url)
 
         if p.status == 200:
-            print(f'status code: {p.status}')
+            logging.debug(f'status code: {p.status}')
         else:
-            print(f'Oh shit... We have a problem, status code: {p.status}')
+            logging.warning(f'Oh shit... We have a problem, status code: {p.status}')
             continue
+
         p.get_cards()
         p.get_homes_url_and_images()
 
@@ -43,10 +45,9 @@ async def check_new_houses(dp: Dispatcher, sleep_time: int):
             image_bytes = BytesIO(response.content)
             user_ids = os.environ.get('USER_IDS', '').split(',')
 
-            logging.debug(f'{user_ids = }')
             for user_id in user_ids:
                 try:
-                    logging.info(f'{user_id = }')
+                    logging.info(f'# send_photo {user_id = }')
                     await dp.bot.send_photo(user_id, photo=image_bytes, caption=msg, parse_mode="Markdown")
                 except Exception as e:
                     print(e)
