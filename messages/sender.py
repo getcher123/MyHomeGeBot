@@ -11,7 +11,7 @@ from messages.msg_txt_creator import get_msg_txt
 from utils import log, shorten
 
 
-def send_messages(p: MyHomeParser, dp: Union[Dispatcher, types.Message]):
+async def send_messages(p: MyHomeParser, dp: Union[Dispatcher, types.Message]):
     # todo: consolidate with show_all()
     for i, url in enumerate(p.homes_url):
         msg = get_msg_txt(p, url, i)
