@@ -1,3 +1,6 @@
+#
+# add initialazing next env var by argparse or yaml with defaults: DEBUG,PORT,TOKEN,HEROKU_APP_NAME
+
 """Webwook entry point"""
 import asyncio
 from utils import logging
@@ -44,6 +47,8 @@ async def on_shutdown(dispatcher) -> None:
 
 
 def main() -> None:
+
+
     # Setting up logging
     logging.basicConfig(
         level=LOGGING_LEVEL,
@@ -68,3 +73,4 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
+

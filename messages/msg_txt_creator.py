@@ -6,6 +6,7 @@ from typing import Dict, Tuple
 
 from home_parser import MyHomeParser
 from utils import log, log_call
+from utils.telegrammy import TelegramBot
 
 Url = str
 
@@ -145,7 +146,11 @@ def get_msg_txt(p: MyHomeParser, url: Url, i: int, *,
         log.exception(f"Fatal exception in {get_msg_txt.__name__}")
         add_info = str(e)
 
-    return (f"{full_descr_info}"
+    return check_text_4_bot(f"{full_descr_info}"
             f" \n"
             f"{add_info}"
             )
+
+def check_text_4_bot(text: str) -> str:
+    text = TelegramBot.make_message_correct(text)
+    return text
