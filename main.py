@@ -14,6 +14,7 @@ from plugins import check_new_houses
 from settings.bot_commands_settings import commands
 from settings.bot_settings import TOKEN
 from settings.debug_settings import LOGGING_LEVEL
+
 from settings.webhook_settings import (WEBHOOK_URL, WEBHOOK_PATH, WEBAPP_HOST, WEBAPP_PORT)
 
 logger = logging.getLogger(__name__)

@@ -34,7 +34,9 @@ async def send_messages(p: MyHomeParser, dp: Union[Dispatcher, types.Message]):
                     image_bytes_copy.seek(0)
                     await dp.bot.send_photo(user_id, photo=image_bytes_copy, caption=msg, parse_mode="Markdown")
                 except Exception as e:
-                    log.exception(f'Error while sending msg: {shorten(msg, 333)}')
+                    ##log.exception(f'Error while sending msg: {shorten(msg, 333)}')
+                    log.error(f'## Error while sending msg:\n\n{msg}\n\n\n')
+                    raise
     except:
-        log.exception(f"Global exception in {this}!")
+        log.exception(f"## Global exception in {this}!")
         raise
