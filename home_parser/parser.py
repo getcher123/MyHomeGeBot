@@ -12,6 +12,8 @@ class MyHomeParser:
     _headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
                               'Chrome/104.0.5112.124 YaBrowser/22.9.4.863 Yowser/2.5 Safari/537.36'}
 
+    first_time:bool = False
+
     def __init__(self, url: str):
         self.request = requests.get(url=url, headers=self._headers)
         self.status = self.request.status_code
@@ -19,8 +21,10 @@ class MyHomeParser:
         self.cards = []
         self.homes_url = []
         self.description = {'image_url': [], 'title': [], 'price': [], 'square': [], 'stairs': [], 'address': []}
-
         self.old_url = os.environ.get('HOMES_URL', '').split(',')
+        if not any(self.old_url):
+            self.first_time = True
+            logging.debug("First time starting")
 
     def get_cards(self):
         all_cards = self.soup.select('div[class="statement-card"]')
@@ -30,6 +34,8 @@ class MyHomeParser:
         for card in self.cards:
             card_href = card.find('a').get('href')[:37]
             if card_href not in self.old_url:
+                logging.debug(f"Find unique url {card_href= }")
+
                 self.homes_url.append(card_href)
                 self.description['image_url'].append(card.find('img', class_='card-img')['data-src'])
                 self.description['title'].append(card.find('h5', class_='card-title').text)
@@ -39,7 +45,14 @@ class MyHomeParser:
                 self.description['address'].append(card.find('div', class_='address').text)
 
     def save_to_env(self):
-        os.environ['HOMES_URL'] = ','.join(self.homes_url)
+        logging.debug(f"Saving ... {self.homes_url= } {self.old_url= }")
+        logging.debug(f"Extends ... {(self.homes_url + self.old_url) = }")
+
+        if any(self.old_url):
+            logging.debug("Old url is not empty")
+            os.environ['HOMES_URL'] = ','.join(self.homes_url + self.old_url)
+        else:
+            os.environ['HOMES_URL'] = ','.join(self.homes_url)
 
     def __del__(self):
         self.request.close()

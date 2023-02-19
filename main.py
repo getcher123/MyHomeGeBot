@@ -6,6 +6,8 @@ import os
 from aiogram import Bot
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils.executor import start_webhook
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
+
 
 from handlers import common
 from plugins import check_new_houses
@@ -18,16 +20,20 @@ logger = logging.getLogger(__name__)
 
 # Declaring and initializing bot and dispatcher objects
 bot = Bot(token=TOKEN)
-dp = Dispatcher(bot)
 
+storage = MemoryStorage()
+
+dp = Dispatcher(bot, storage=storage)
 
 # Registration of commands displayed in the Telegram interface
 async def set_commands(bot: Bot):
-    await bot.set_my_commands(commands)
+    logging.debug(f'{commands = }')
 
 
 async def on_startup(dispatcher) -> None:
     await bot.set_webhook(WEBHOOK_URL, drop_pending_updates=True)
+    await bot.set_my_commands(commands)
+
     loop = asyncio.get_event_loop()
     loop.create_task(check_new_houses(dp, int(os.getenv('TIMEOUT'))))
 

@@ -1,4 +1,6 @@
 import asyncio
+# todo: move to util.py
+import logging as logging
 import os
 from io import BytesIO
 
@@ -6,9 +8,11 @@ import requests
 from aiogram.dispatcher import Dispatcher
 
 from home_parser import MyHomeParser
-from plugins.msg_txt_creator import get_msg_txt
+from settings.debug_settings import LOGGING_LEVEL
 # `? from util import __all__
 from .util import log, shorten
+
+logging.basicConfig(level=LOGGING_LEVEL)
 
 first_time: bool  # признак того, что ссылка указана 1-й раз, и надо делать fetch
 
@@ -35,13 +39,19 @@ async def check_new_houses(dp: Dispatcher, sleep_time: int):
         if not len(p.homes_url):
             continue
 
+        p.save_to_env()
+
+        if p.first_time:
+            continue
+
         for i, url in enumerate(p.homes_url):
-            msg = get_msg_txt(p, url, i)
+            # todo:
+            # msg = get_msg_txt(p, url, i)
+            msg = f"**[{p.description['title'][i]}]({url})** - \n*${p.description['price'][i]}*     {p.description['square'][i]}     {p.description['stairs'][i]} \n{p.description['address'][i]}"
             image_url = p.description['image_url'][i]
 
             # Download the image and sends it
             response = requests.get(image_url)
-            image_bytes = BytesIO(response.content)
             user_ids = os.environ.get('USER_IDS', '').split(',')
 
             if not user_ids:
@@ -51,8 +61,8 @@ async def check_new_houses(dp: Dispatcher, sleep_time: int):
             for user_id in user_ids:
                 try:
                     log.info(f'# send_photo {user_id = }')
-                    await dp.bot.send_photo(user_id, photo=image_bytes, caption=msg, parse_mode="Markdown")
-                except Exception as e:  # todo: more concrete Exception-class
+                    image_bytes_copy = BytesIO(response.content)
+                    image_bytes_copy.seek(0)
+                    await dp.bot.send_photo(user_id, photo=image_bytes_copy, caption=msg, parse_mode="Markdown")
+                except Exception as e:
                     log.exception(f'Error while sending msg: {shorten(msg, 333)}')
-
-        p.save_to_env()
