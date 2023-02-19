@@ -1,6 +1,4 @@
 import asyncio
-# todo: move to util.py
-import logging as logging
 import os
 from io import BytesIO
 
@@ -8,11 +6,8 @@ import requests
 from aiogram.dispatcher import Dispatcher
 
 from home_parser import MyHomeParser
-from settings.debug_settings import LOGGING_LEVEL
-# `? from util import __all__
+from .msg_txt_creator import get_msg_txt
 from .util import log, shorten
-
-logging.basicConfig(level=LOGGING_LEVEL)
 
 first_time: bool  # признак того, что ссылка указана 1-й раз, и надо делать fetch
 
@@ -46,8 +41,7 @@ async def check_new_houses(dp: Dispatcher, sleep_time: int):
 
         for i, url in enumerate(p.homes_url):
             # todo:
-            # msg = get_msg_txt(p, url, i)
-            msg = f"**[{p.description['title'][i]}]({url})** - \n*${p.description['price'][i]}*     {p.description['square'][i]}     {p.description['stairs'][i]} \n{p.description['address'][i]}"
+            msg = get_msg_txt(p, url, i)
             image_url = p.description['image_url'][i]
 
             # Download the image and sends it
