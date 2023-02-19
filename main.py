@@ -21,7 +21,7 @@ from settings.conf import CONF
 from settings.webhook_settings import (WEBHOOK_URL, WEBHOOK_PATH, WEBAPP_HOST, WEBAPP_PORT)
 from utils import logging
 from utils.logger import init_logging
-from utils.telegrammy import TelegramBot
+from utils.telegrammy import TelegramBot, reg_bot_commands
 
 commands = commands
 # logger = logging.getLogger(__name__)
@@ -36,8 +36,8 @@ dp = Dispatcher(bot, storage=storage)
 
 # Registration of commands displayed in the Telegram interface
 async def set_commands(bot: Bot):
-    logging.debug(f'#3 {commands = }')
     global commands
+    logging.debug(f'#3 {commands = }')
     commands = reg_bot_commands(
         start="Bot start🚀",
         help="Help🆘",
