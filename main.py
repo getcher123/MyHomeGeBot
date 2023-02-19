@@ -37,7 +37,7 @@ async def on_shutdown(dispatcher) -> None:
 
 
 def main() -> None:
-    # Setting up log
+    # Setting up logging
     logging.basicConfig(
         level=LOGGING_LEVEL,
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",

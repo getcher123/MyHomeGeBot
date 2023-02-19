@@ -8,7 +8,7 @@ from aiogram.dispatcher import Dispatcher
 from home_parser import MyHomeParser
 from plugins.msg_txt_creator import get_msg_txt
 # `? from util import __all__
-from util import log, shorten
+from .util import log, shorten
 
 first_time: bool  # признак того, что ссылка указана 1-й раз, и надо делать fetch
 

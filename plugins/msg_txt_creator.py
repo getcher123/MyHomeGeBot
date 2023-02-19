@@ -1,5 +1,5 @@
 from home_parser import MyHomeParser
-from util import log
+from .util import log
 
 Url = str
 
