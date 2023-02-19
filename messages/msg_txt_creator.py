@@ -12,7 +12,9 @@ def if_exc_ret_err_txt(f):
         try:
             return f(*a, **k)
         except Exception as e:
-            return str(e)
+            # return str(e)
+            log.error(str(e))
+            return f"Some error in {f.__name__}({a if a else ''}, {k if k else ''})"
 
     return w
 
