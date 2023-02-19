@@ -1,5 +1,5 @@
 """Settings required to work with the telegram api"""
-import logging
+from utils import logging
 import os
 
 # Getting a token for api telegrams from an environment variable

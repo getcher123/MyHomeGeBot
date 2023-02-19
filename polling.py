@@ -1,5 +1,5 @@
 """Polling entry point"""
-import logging
+from utils import logging
 import asyncio
 
 from settings.bot_settings import TOKEN

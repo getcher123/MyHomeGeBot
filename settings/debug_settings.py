@@ -1,5 +1,5 @@
 """Settings required for logging in DEBUG mode"""
-import logging
+from utils import logging
 import os
 
 # Getting the DEBUG value from an environment variable

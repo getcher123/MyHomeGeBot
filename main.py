@@ -1,6 +1,6 @@
 """Webwook entry point"""
 import asyncio
-import logging
+from utils import logging
 import os
 
 from aiogram import Bot
