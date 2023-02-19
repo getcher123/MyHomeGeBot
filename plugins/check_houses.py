@@ -6,8 +6,8 @@ import requests
 from aiogram.dispatcher import Dispatcher
 
 from home_parser import MyHomeParser
+from utils import log, shorten, warn
 from .msg_txt_creator import get_msg_txt
-from ..utils import log, shorten, warn
 
 first_time: bool  # признак того, что ссылка указана 1-й раз, и надо делать fetch
 
