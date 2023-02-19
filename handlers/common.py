@@ -1,19 +1,16 @@
 """Сommon handlers and registration"""
 import os
-from io import BytesIO
-
 
 from aiogram import types
 from aiogram.dispatcher import Dispatcher
 from aiogram.dispatcher import FSMContext
-import requests
 
+from home_parser import MyHomeParser
 from home_parser.parser import check_status
 from keyboards import set_link_keyboard
 from messages import MESSAGES
 from messages.sender import send_messages
 from states import Form
-from home_parser import MyHomeParser
 from utils import get_var, logging
 
 
@@ -81,7 +78,7 @@ class CommonHandlers:
         if not len(p.homes_url):
             return
 
-        send_messages(p, message)
+        await send_messages(p, message)
 
         ##~^ todo: remove after testing
         # for i, var_val in enumerate(p.homes_url):

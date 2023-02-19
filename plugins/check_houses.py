@@ -30,4 +30,4 @@ async def check_new_houses(dp: Dispatcher, sleep_time: int):
 
         if p.first_time: continue
 
-        send_messages(p, dp)
+        await send_messages(p, dp)
