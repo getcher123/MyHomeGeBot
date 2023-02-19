@@ -2,7 +2,7 @@
 from aiogram.types import BotCommand
 
 from utils import logging
-from utils.telegrammy import reg_bot_commands
+from utils.telegrammy.tools import reg_bot_commands
 
 commands = [
     BotCommand(command="/start", description="Bot start🚀"),

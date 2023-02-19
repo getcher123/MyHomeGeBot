@@ -1,11 +1,17 @@
 """Settings required to work with the telegram api"""
-from utils import logging
-import os
+from settings import set_glob
 
-# Getting a token for api telegrams from an environment variable
-TOKEN = os.getenv('TOKEN')
+##`?
+TOKEN = set_glob('TOKEN')
+# set_glob('TOKEN')
 
-# Сhecking for the existence of a variable
-if not TOKEN:
-    logging.error("not TOKEN!")
-    exit()
+
+# ##?r^
+# # Getting a token for api telegrams from an environment variable
+# TOKEN = os.getenv('TOKEN')
+#
+# # # Сhecking for the existence of a variable
+# # if not TOKEN:
+# #     logging.error("not TOKEN!")
+# #     exit()
+# check_globs('TOKEN', TOKEN)
