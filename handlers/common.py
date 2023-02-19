@@ -153,6 +153,6 @@ def register_client_handlers(dp: Dispatcher) -> None:
     dp.register_message_handler(CommonHandlers.show_all, commands=['show'])
     dp.register_message_handler(CommonHandlers.set_link,  lambda message: message.text in ['Задать ссылку для поиска', 'Обновить ссылку для поиска'])
     dp.register_message_handler(CommonHandlers.show_link,  lambda message: message.text  == 'Посмотреть заданную ссылку')
-
+    dp.register_message_handler(CommonHandlers.show_link,  commands=['show_link'])
     dp.register_message_handler(CommonHandlers.cancel_command, commands=['cancel'], state='*')
     dp.register_message_handler(CommonHandlers.update_link, state=Form.url)
