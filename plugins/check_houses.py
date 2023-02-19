@@ -1,7 +1,6 @@
 from aiogram.dispatcher import Dispatcher
 
 from home_parser import MyHomeParser
-from home_parser.parser import check_status
 from messages.sender import send_messages
 from utils import warn
 from utils.common import sleep, get_var
@@ -16,9 +15,8 @@ async def check_new_houses(dp: Dispatcher, sleep_time: int):
         if not (url := get_var('URL')): continue
 
         p = MyHomeParser(url)
-
-        if not check_status(p): continue
-
+        # ?r if not check_status(p): continue
+        if not p.check_status(): continue
         p.get_cards()
         p.get_homes_url_and_images()
 

@@ -11,8 +11,7 @@ from keyboards import set_link_keyboard
 from messages import MESSAGES
 from messages.sender import send_messages
 from states import Form
-from utils import logging
-from utils.common import get_var
+from utils import logging, warn, get_var
 
 
 class CommonHandlers:
@@ -77,6 +76,7 @@ class CommonHandlers:
         p.save_to_env()
 
         if not len(p.homes_url):
+            warn("not len(p.homes_url)")
             return
 
         await send_messages(p, message)
