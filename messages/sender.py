@@ -8,7 +8,8 @@ from aiogram.dispatcher import Dispatcher
 
 from home_parser import MyHomeParser
 from messages.msg_txt_creator import get_msg_txt
-from utils import log, shorten
+from settings.conf import CONF
+from utils import log
 
 
 async def send_messages(p: MyHomeParser, dp: Union[Dispatcher, types.Message]):
@@ -32,7 +33,17 @@ async def send_messages(p: MyHomeParser, dp: Union[Dispatcher, types.Message]):
                     log.info(f'# send_photo {user_id = }')
                     image_bytes_copy = BytesIO(response.content)
                     image_bytes_copy.seek(0)
-                    await dp.bot.send_photo(user_id, photo=image_bytes_copy, caption=msg, parse_mode="Markdown")
+
+                    if CONF.USE_SEND_PHOTO_WRAPPER:
+                        from main import telegramBot
+                        await telegramBot.send_photo(
+                            user_id, photo_url=image_url, caption=msg,
+                            parse_mode="Markdown",
+                            auto_correct=CONF.AUTO_CORRECT,
+                        )
+                    else:
+                        await dp.bot.send_photo(user_id, photo=image_bytes_copy, caption=msg, parse_mode="Markdown")
+
                 except Exception as e:
                     ##log.exception(f'Error while sending msg: {shorten(msg, 333)}')
                     log.error(f'## Error while sending msg:\n\n{msg}\n\n\n')

@@ -4,7 +4,8 @@ import re
 from aiogram import Bot
 from fastcore.foundation import L
 
-from utils import logger
+from utils import logger, log_call
+
 
 # from aiogram.utils.exceptions import TelegramError
 class TelegramError(Exception): pass
@@ -49,6 +50,7 @@ class TelegramBot:
 
         return is_correct, incorrect_symbols
 
+    @log_call
     @staticmethod
     def make_message_correct(text: str) -> str:
         """
@@ -122,7 +124,9 @@ class TelegramBot:
             logger.exception(f"Error sending message to chat {chat_id}: {e}")
             raise e
 
-    def send_photo(self, chat_id: int, photo_url: str, caption: str = None, auto_correct: bool = False) -> None:
+    async def send_photo(self, chat_id: int, photo_url: str, caption: str = None,
+                         auto_correct: bool = False, **send_photo_kwargs
+                         ) -> None:
         """
         Sends a photo to a Telegram chat using the specified bot token and chat ID, with optional auto-correction or
         error raising.
@@ -175,7 +179,7 @@ class TelegramBot:
 
         try:
             # Send the photo
-            self.bot.send_photo(chat_id=chat_id, photo=photo_url, caption=caption)
+            await self.bot.send_photo(chat_id=chat_id, photo=photo_url, caption=caption, **send_photo_kwargs)
         except TelegramError as e:
             logger.exception(f"Error sending photo to chat {chat_id}: {e}")
             raise e

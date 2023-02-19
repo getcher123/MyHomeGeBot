@@ -1,24 +1,26 @@
-#
-# add initialazing next env var by argparse or yaml with defaults: DEBUG,PORT,TOKEN,HEROKU_APP_NAME
+# With code below do next:
+# - add initialazing next env var by argparse or yaml with defaults: DEBUG,PORT,TOKEN,HEROKU_APP_NAME
+# - place defauls in some separate class
+# - add generation of yaml func with defaults
 
 """Webwook entry point"""
 import asyncio
-from utils import logging
 import os
 
 from aiogram import Bot
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils.executor import start_webhook
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
-
 
 from handlers import common
 from plugins import check_new_houses
 from settings.bot_commands_settings import commands
 from settings.bot_settings import TOKEN
-from settings.debug_settings import LOGGING_LEVEL
-
+from settings.conf import CONF
 from settings.webhook_settings import (WEBHOOK_URL, WEBHOOK_PATH, WEBAPP_HOST, WEBAPP_PORT)
+from utils import logging
+from utils.logger import init_logging
+from utils.telegrammy import TelegramBot
 
 logger = logging.getLogger(__name__)
 
@@ -47,18 +49,13 @@ async def on_shutdown(dispatcher) -> None:
 
 
 def main() -> None:
+    init_logging()
 
-
-    # Setting up logging
-    logging.basicConfig(
-        level=LOGGING_LEVEL,
-        format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
-    )
     # Registration of handlers
     common.register_client_handlers(dp)
     # Installing bot commands
     set_commands(bot)
-    
+
     # Webhook start
     start_webhook(
         dispatcher=dp,
@@ -71,6 +68,8 @@ def main() -> None:
     )
 
 
+if CONF.INIT_TelegramBot:
+    telegramBot = TelegramBot(TOKEN)
+
 if __name__ == '__main__':
     main()
-
