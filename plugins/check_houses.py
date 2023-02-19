@@ -7,7 +7,7 @@ from aiogram.dispatcher import Dispatcher
 
 from home_parser import MyHomeParser
 from .msg_txt_creator import get_msg_txt
-from .util import log, shorten
+from ..utils import log, shorten, warn
 
 first_time: bool  # признак того, что ссылка указана 1-й раз, и надо делать fetch
 
@@ -32,6 +32,7 @@ async def check_new_houses(dp: Dispatcher, sleep_time: int):
         p.get_homes_url_and_images()
 
         if not len(p.homes_url):
+            warn("not len(p.homes_url)")
             continue
 
         p.save_to_env()

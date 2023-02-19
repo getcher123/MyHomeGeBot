@@ -1,9 +1,10 @@
 from home_parser import MyHomeParser
-from .util import log
+from ..utils import log, log_call
 
 Url = str
 
 
+@log_call
 def get_tags_txt(full_desc_info: str, *, address: str = ''):
     address = address or full_desc_info.splitlines()[1]
     tags = []
@@ -23,6 +24,7 @@ def convert_int(var, val):
         return price_val
 
 
+@log_call
 def get_price_2_sqr_val(price, square):
     price_val = convert_int('price',
                             price
@@ -34,6 +36,7 @@ def get_price_2_sqr_val(price, square):
     return price_2_sqr_val
 
 
+@log_call
 def get_msg_txt(p: MyHomeParser, url: Url, i: int, *,
                 prop_sep='     ',
                 ):
