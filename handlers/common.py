@@ -11,7 +11,8 @@ from keyboards import set_link_keyboard
 from messages import MESSAGES
 from messages.sender import send_messages
 from states import Form
-from utils import get_var, logging
+from utils import logging
+from utils.common import get_var
 
 
 class CommonHandlers:

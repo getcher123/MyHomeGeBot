@@ -3,8 +3,8 @@ from aiogram.dispatcher import Dispatcher
 from home_parser import MyHomeParser
 from home_parser.parser import check_status
 from messages.sender import send_messages
-from utils import warn, get_var
-from utils.common import sleep
+from utils import warn
+from utils.common import sleep, get_var
 
 first_time: bool  # признак того, что ссылка указана 1-й раз, и надо делать fetch
 

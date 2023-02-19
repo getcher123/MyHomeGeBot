@@ -3,7 +3,7 @@ import os
 import requests
 from bs4 import BeautifulSoup, ResultSet
 
-from utils import log, log_call, logging
+from utils import log, log_call, logging, shorten
 
 
 class MyHomeParser:
@@ -65,8 +65,8 @@ class MyHomeParser:
                 self.description['address'].append(card.find('div', class_='address').text)
 
     def save_to_env(self):
-        logging.debug(f"Saving ... {self.homes_url= } {self.old_url= }")
-        logging.debug(f"Extends ... {(self.homes_url + self.old_url) = }")
+        # logging.debug(f"Saving ... {self.homes_url= } {self.old_url= }")
+        logging.debug(f"Extends ... {shorten(self.homes_url + self.old_url, 2222) = }")
 
         if any(self.old_url):
             logging.debug("Old url is not empty")
