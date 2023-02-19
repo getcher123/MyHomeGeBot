@@ -7,7 +7,7 @@ from textwrap import shorten
 from types import FunctionType
 from typing import Any
 
-from .logger import log
+from utils.logger import log
 
 # from core.core import pass_
 # from ..loggy._my_logger import logd, get_a_kw_call_str

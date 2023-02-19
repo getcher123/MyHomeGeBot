@@ -1,6 +1,6 @@
 from warnings import warn
 
-from .calls_logger import log_call
+from utils.logger.calls_logger import log_call
 from .common import *
 ##from textwrap import shorten
 from .common import shorten

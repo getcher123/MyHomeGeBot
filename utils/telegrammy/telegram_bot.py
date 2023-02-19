@@ -1,14 +1,11 @@
-#
 import re
 
 from aiogram import Bot
 from fastcore.foundation import L
 
 from utils import logger, log_call
-
-
-# from aiogram.utils.exceptions import TelegramError
-class TelegramError(Exception): pass
+from utils.telegrammy.err_handler import TelegramError
+from utils.telegrammy.err_handler import handle_cant_parse_entities_exception
 
 
 class TelegramBot:
@@ -73,6 +70,7 @@ class TelegramBot:
 
         return corrected_text
 
+    @handle_cant_parse_entities_exception
     def send_message(self, chat_id: int, text: str, auto_correct: bool = False) -> None:
         """
         Sends a message to a Telegram chat using the specified bot token and chat ID, with optional auto-correction or
@@ -124,6 +122,7 @@ class TelegramBot:
             logger.exception(f"Error sending message to chat {chat_id}: {e}")
             raise e
 
+    @handle_cant_parse_entities_exception
     async def send_photo(self, chat_id: int, photo_url: str, caption: str = None,
                          auto_correct: bool = False, **send_photo_kwargs
                          ) -> None:
