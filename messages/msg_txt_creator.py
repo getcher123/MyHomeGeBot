@@ -62,7 +62,8 @@ def get_price_val(price) -> int:
 @log_call
 def get_price_2_sqr_val(price, square):
     price_val = get_price_val(price)
-    square_val = convert_int('square', square)
+    square_val = convert_int('square', square.replace(' м²', '')
+                             )
     # price_2_sqr_val = '<unknown>' if not all((price_val, price_val)) else square_val / price_val
     if not all((price_val, price_val)):
         price_2_sqr_val = '<unknown>'
