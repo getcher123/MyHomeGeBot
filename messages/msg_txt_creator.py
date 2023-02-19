@@ -1,4 +1,4 @@
-#todo: 4cg:
+#todo: 4cg: improve this code, add typing, doctests, wrap into class, if it'll be better design:
 from typing import Dict, Tuple
 
 from home_parser import MyHomeParser
