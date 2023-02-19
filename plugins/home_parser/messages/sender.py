@@ -6,8 +6,8 @@ import requests
 from aiogram import types
 from aiogram.dispatcher import Dispatcher
 
-from home_parser import MyHomeParser
-from messages.msg_txt_creator import get_msg_txt
+from plugins.home_parser import MyHomeParser
+from plugins.home_parser.messages.msg_txt_creator import get_msg_txt
 from settings.conf import CONF
 from utils import log
 

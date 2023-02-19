@@ -1,6 +1,6 @@
 from aiogram.dispatcher import Dispatcher
 
-from home_parser import MyHomeParser
+from plugins.home_parser import MyHomeParser
 from messages.sender import send_messages
 from utils import warn
 from utils.common import sleep, get_var

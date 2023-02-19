@@ -1,11 +1,15 @@
+import re
 from functools import wraps
+from typing import Tuple, Optional
 
 import aiogram.utils
 import aiogram.utils.exceptions
-import re
-from typing import Tuple, Optional
+
+from utils.telegrammy import send_message
+
 
 class TelegramError(Exception): pass
+
 
 class TelegramErrorHandler:
     @staticmethod
@@ -55,7 +59,8 @@ class TelegramErrorHandler:
             await context.bot.send_photo(chat_id=update.effective_chat.id, photo=update.message.photo[-1].file_id, caption=caption_text)
         except aiogram.utils.exceptions.CantParseEntities as e:
             reason, _ = cls.determine_error_reason(str(e), e)
-            await context.bot.send_message(chat_id=update.effective_chat.id, text=reason)
+            ##? await context.bot.send_message(chat_id=update.effective_chat.id, text=reason)
+            await send_message(chat_id=update.effective_chat.id, text=f"An error occurred: {reason}")
             return reason, e
 
     @staticmethod
@@ -108,5 +113,6 @@ def handle_cant_parse_entities_exception(func):
         except aiogram.utils.exceptions.CantParseEntities as e:
             error_msg = str(e)
             error_reason, _ = determine_error_reason(error_msg, e)
-            await context.bot.send_message(chat_id=update.effective_chat.id, text=f"An error occurred: {error_reason}")
+            ##await context.bot.send_message(chat_id=update.effective_chat.id, text=f"An error occurred: {error_reason}")
+            await send_message(chat_id=update.effective_chat.id, text=f"An error occurred: {error_reason}")
     return wrapper

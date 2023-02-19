@@ -3,6 +3,9 @@ import re
 from aiogram import Bot
 from fastcore.foundation import L
 
+from main import telegramBot
+send_message = telegramBot.send_message
+
 from utils import logger, log_call
 from utils.telegrammy.err_handler import TelegramError
 from utils.telegrammy.err_handler import handle_cant_parse_entities_exception
@@ -70,7 +73,8 @@ class TelegramBot:
 
         return corrected_text
 
-    @handle_cant_parse_entities_exception
+    ##@handle_cant_parse_entities_exception
+    send_message_hanled = handle_cant_parse_entities_exception(TelegramBot.send_message)
     def send_message(self, chat_id: int, text: str, auto_correct: bool = False) -> None:
         """
         Sends a message to a Telegram chat using the specified bot token and chat ID, with optional auto-correction or
@@ -182,3 +186,4 @@ class TelegramBot:
         except TelegramError as e:
             logger.exception(f"Error sending photo to chat {chat_id}: {e}")
             raise e
+

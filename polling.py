@@ -3,12 +3,11 @@ from utils import logging
 import asyncio
 
 from settings.bot_settings import TOKEN
-from settings.bot_commands_settings import commands
+from bot.bot_commands_settings import commands
 
-from handlers import common
+from bot.handlers import common
 
 from aiogram import Bot
-from aiogram.types import BotCommand
 from aiogram.dispatcher import Dispatcher
 
 

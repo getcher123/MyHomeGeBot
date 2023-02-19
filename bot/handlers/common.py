@@ -5,12 +5,12 @@ from aiogram import types
 from aiogram.dispatcher import Dispatcher
 from aiogram.dispatcher import FSMContext
 
-from home_parser import MyHomeParser
-from home_parser.parser import check_status
-from keyboards import set_link_keyboard
-from messages import MESSAGES
-from messages.sender import send_messages
-from states import Form
+from plugins.home_parser import MyHomeParser
+from plugins.home_parser.parser import check_status
+from bot.keyboards import set_link_keyboard
+from plugins.home_parser.messages import MESSAGES
+from plugins.home_parser.messages.sender import send_messages
+from bot.states import Form
 from utils import logging, warn, get_var
 
 

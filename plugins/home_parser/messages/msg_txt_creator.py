@@ -4,7 +4,7 @@
 # use reST-styled docstrings and make them maximally shorter, use fastcore.store_attrs(), use @dataclass, if it's suiteable, improve var-names where it's suitable
 from typing import Dict, Tuple
 
-from home_parser import MyHomeParser
+from plugins.home_parser import MyHomeParser
 from utils import log, log_call
 from utils.telegrammy import TelegramBot
 

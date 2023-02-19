@@ -6,15 +6,16 @@
 """Webwook entry point"""
 import asyncio
 import os
+import utils
 
 from aiogram import Bot
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils.executor import start_webhook
 
-from handlers import common
+from bot.handlers import common
 from plugins import check_new_houses
-from settings.bot_commands_settings import commands
+from bot.bot_commands_settings import commands
 from settings.bot_settings import TOKEN
 from settings.conf import CONF
 from settings.webhook_settings import (WEBHOOK_URL, WEBHOOK_PATH, WEBAPP_HOST, WEBAPP_PORT)
@@ -22,7 +23,9 @@ from utils import logging
 from utils.logger import init_logging
 from utils.telegrammy import TelegramBot
 
-logger = logging.getLogger(__name__)
+commands = commands
+# logger = logging.getLogger(__name__)
+logger = utils.getLogger(__name__)
 
 # Declaring and initializing bot and dispatcher objects
 bot = Bot(token=TOKEN)
@@ -33,7 +36,17 @@ dp = Dispatcher(bot, storage=storage)
 
 # Registration of commands displayed in the Telegram interface
 async def set_commands(bot: Bot):
-    logging.debug(f'{commands = }')
+    logging.debug(f'#3 {commands = }')
+    global commands
+    commands = reg_bot_commands(
+        start="Bot start🚀",
+        help="Help🆘",
+        set_link='установить новую ссылку для поиска',
+        show='посмотреть всю выдачу',
+        cancel='отменить действие',
+        show_link='Посмотреть текущую ссылку для поиска',
+    )
+    logging.debug(f'#4 {commands = }')
 
 
 async def on_startup(dispatcher) -> None:
@@ -71,5 +84,13 @@ def main() -> None:
 if CONF.INIT_TelegramBot:
     telegramBot = TelegramBot(TOKEN)
 
+
+def main_get_args():
+    pass
+
+
 if __name__ == '__main__':
-    main()
+    if os.getenv('TOKEN', ''):
+        main()
+    else:
+        main_get_args()

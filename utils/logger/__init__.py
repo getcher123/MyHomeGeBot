@@ -1,11 +1,13 @@
-import logging
 import logging as log
 import logging as logging
+
 from loguru import logger
-#todo: consolidate loggers!
+
+# todo: consolidate loggers!
 from settings.debug_settings import LOGGING_LEVEL
 
 log.basicConfig(level=LOGGING_LEVEL)
+getLogger = logging.getLogger
 
 log, logging, logger
 
