@@ -1,4 +1,3 @@
-# импортируем типы из библиотеки aiogram
 from aiogram import types
 
 

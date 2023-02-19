@@ -1,19 +1,18 @@
-import logging
 import os
 
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, ResultSet
 
-from settings.debug_settings import LOGGING_LEVEL
+from utils import log, log_call, logging
 
-logging.basicConfig(level=LOGGING_LEVEL)
 
 class MyHomeParser:
     _headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
                               'Chrome/104.0.5112.124 YaBrowser/22.9.4.863 Yowser/2.5 Safari/537.36'}
 
-    first_time:bool = False
+    first_time: bool = False
 
+    @log_call
     def __init__(self, url: str):
         self.request = requests.get(url=url, headers=self._headers)
         self.status = self.request.status_code
@@ -27,14 +26,35 @@ class MyHomeParser:
             logging.debug("First time starting")
 
     def get_cards(self):
-        all_cards = self.soup.select('div[class="statement-card"]')
+        all_cards: ResultSet = self.soup.select('div[class="statement-card"]')
         self.cards.extend(all_cards)
+
+    def get_parsing_template(self):
+        # todo: implement using parsing templates like this:
+        template = {
+            'image_url': ['img', {'expanded': {'class_': 'card-img'}}, {'get': {'dict': 'data-src'}}],
+            'title': ['h5', {'expanded': {'class_': 'card-title'}}, {'get': {'property': 'text'}}],
+            'price': ['b', {'non-expanded': {'class': 'item-price-usd'}}, {'get': {'property': 'text'}}],
+            'square': ['div', {'non-expanded': {'class': 'item-size'}}, {'get': {'property': 'text'}}],
+            '...': ['<not implemented yet>'],
+        }
+
+        def _check_template(t):
+            if '...' in template.keys():
+                log.error(f"Not fully implemented template! Only this ready: {template.keys()}")
+                return False
+            return True
+
+        if _check_template(template):
+            return template
+        else:
+            raise NotImplementedError
 
     def get_homes_url_and_images(self):
         for card in self.cards:
             card_href = card.find('a').get('href')[:37]
             if card_href not in self.old_url:
-                logging.debug(f"Find unique url {card_href= }")
+                logging.debug(f"Find unique url {card_href = }")
 
                 self.homes_url.append(card_href)
                 self.description['image_url'].append(card.find('img', class_='card-img')['data-src'])
@@ -57,3 +77,16 @@ class MyHomeParser:
     def __del__(self):
         self.request.close()
         del self
+
+    def check_status(self):
+        p = self
+        if p.status == 200:
+            log.debug(f'status code: {p.status}')
+            return True
+        else:
+            log.warning(f'Oh shit... We have a problem, status code: {p.status}')
+            return False
+
+
+def check_status(p: MyHomeParser): return p.check_status()
+#todo: replace on class-func

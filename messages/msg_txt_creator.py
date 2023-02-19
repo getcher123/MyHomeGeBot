@@ -55,7 +55,7 @@ def get_msg_txt(p: MyHomeParser, url: Url, i: int, *,
     address = address.replace(', Батуми', '')
     descr = descr
 
-    # i msg = f"**[{p.description['title'][i]}]({url})** - \n*${p.description['price'][i]}*     {p.description['square'][i]}     {p.description['stairs'][i]} \n{p.description['address'][i]}"
+    # i msg = f"**[{p.description['title'][i]}]({var_val})** - \n*${p.description['price'][i]}*     {p.description['square'][i]}     {p.description['stairs'][i]} \n{p.description['address'][i]}"
     full_descr_info = (f"**[{title}]({url})** -"
                        f" \n"
                        f"*${price}*"
