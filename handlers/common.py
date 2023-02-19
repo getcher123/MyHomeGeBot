@@ -103,6 +103,16 @@ class CommonHandlers:
             message (types.Message): Instance of the Message class.
         """
         await message.answer("We'll be there soon 🆘")
+    
+    async def show_link(message: types.Message) -> None: 
+        """
+        Handler of the /help command
+
+        Args:
+            message (types.Message): Instance of the Message class.
+        """
+        url = os.environ.get('URL')
+        await message.answer(url)
         
     async def cancel_command(message: types.Message, state: FSMContext) -> None: 
         current_state = await state.get_state()
@@ -142,5 +152,7 @@ def register_client_handlers(dp: Dispatcher) -> None:
     dp.register_message_handler(CommonHandlers.set_link, commands=['set_link'])
     dp.register_message_handler(CommonHandlers.show_all, commands=['show'])
     dp.register_message_handler(CommonHandlers.set_link,  lambda message: message.text in ['Задать ссылку для поиска', 'Обновить ссылку для поиска'])
+    dp.register_message_handler(CommonHandlers.show_link,  message = 'Посмотреть заданную ссылку')
+
     dp.register_message_handler(CommonHandlers.cancel_command, commands=['cancel'], state='*')
     dp.register_message_handler(CommonHandlers.update_link, state=Form.url)
