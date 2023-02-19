@@ -27,6 +27,7 @@ dp = Dispatcher(bot, storage=storage)
 
 # Registration of commands displayed in the Telegram interface
 async def set_commands(bot: Bot):
+    logging.debug(f'{commands = }')
     await bot.set_my_commands(commands)
 
 
