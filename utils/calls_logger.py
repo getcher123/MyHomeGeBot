@@ -18,7 +18,7 @@ def shortext(s: Any, len=111, **k) -> str:
     'aaabbbcccddddeeee ffffgggghhhhiiiijjjj [...] hhhhiiii jjjj'
     """
     if isinstance(s, int) and not isinstance(len, int): a, len = len, s
-    logging.debug(f"{k.pop('len_tail_percent')=} ignored!")
+    # logging.debug(f"{k.pop('len_tail_percent')=} ignored!")
     return shorten(str(s), len, **k)
 
 
