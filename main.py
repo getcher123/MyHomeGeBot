@@ -28,11 +28,12 @@ dp = Dispatcher(bot, storage=storage)
 # Registration of commands displayed in the Telegram interface
 async def set_commands(bot: Bot):
     logging.debug(f'{commands = }')
-    await bot.set_my_commands(commands)
 
 
 async def on_startup(dispatcher) -> None:
     await bot.set_webhook(WEBHOOK_URL, drop_pending_updates=True)
+    await bot.set_my_commands(commands)
+
     loop = asyncio.get_event_loop()
     loop.create_task(check_new_houses(dp, int(os.getenv('TIMEOUT'))))
 
