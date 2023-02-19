@@ -46,11 +46,11 @@ class MyHomeParser:
 
     def save_to_env(self):
         logging.debug(f"Saving ... {self.homes_url= } {self.old_url= }")
-        logging.debug(f"Extends ... {self.homes_url.extend(self.old_url) = }")
+        logging.debug(f"Extends ... {(self.homes_url + self.old_url) = }")
 
         if any(self.old_url):
             logging.debug("Old url is not empty")
-            os.environ['HOMES_URL'] = ','.join(self.homes_url.extend(self.old_url))
+            os.environ['HOMES_URL'] = ','.join(self.homes_url + self.old_url)
         else:
             os.environ['HOMES_URL'] = ','.join(self.homes_url)
 
