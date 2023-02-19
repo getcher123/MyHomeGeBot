@@ -51,7 +51,7 @@ class CommonHandlers:
         Args:
             message (types.Message): Instance of the Message class.
         """
-        await message.answer("Feching ....!")
+        await message.answer("Fetching ....!")
         os.environ['HOMES_URL'] = ""
         url = os.environ.get('URL')
         if not url:
@@ -69,6 +69,7 @@ class CommonHandlers:
 
         p.get_cards()
         p.get_homes_url_and_images()
+        p.save_to_env()
 
         if not len(p.homes_url):
             return
@@ -122,8 +123,8 @@ class CommonHandlers:
             data['url'] = message.text
         # Save the URL to an environment variable
         os.environ['URL'] = message.text
-        logging.debug(f"{os.environ['URL'] = }")
-        os.environ['HOMES_URL'] = ""
+        logging.debug(f"set new {os.environ['URL'] = }")
+#        os.environ['HOMES_URL'] = ""
         await state.finish()
         await message.answer(
             MESSAGES['link_updated']
