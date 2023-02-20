@@ -4,7 +4,16 @@ import logging
 import os
 from typing import Any
 
-import yaml
+from loguru import logger as log
+
+try:
+    from PyYAML import yaml
+except ImportError as e:
+    log.warning(f"? {e}")
+    try:
+        import yaml
+    except ImportError as e:
+        log.warning(f"? {e}")
 
 from _init.env_vars_globs import load_param
 
