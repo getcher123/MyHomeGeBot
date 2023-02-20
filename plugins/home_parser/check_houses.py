@@ -8,7 +8,7 @@ from utils.common import sleep, get_var
 first_time: bool  # признак того, что ссылка указана 1-й раз, и надо делать fetch
 
 
-async def check_new_houses(dp: Dispatcher, sleep_time: int):
+async def check_new_houses(dp: Dispatcher, *, sleep_time: int):
     while True:
         await sleep(sleep_time)
 

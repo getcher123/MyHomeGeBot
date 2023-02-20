@@ -109,9 +109,7 @@ def init_globals():
     log.info("""# Declaring and initializing bot and dispatcher objects""")
     conf.TOKEN = os.getenv('TOKEN')
     conf.DEBUG = os.getenv('DEBUG')
-    conf.PORT = os.getenv('PORT')
-    conf.TIMEOUT = os.getenv('TIMEOUT')
+    conf.PORT = int(os.getenv('PORT'))
+    conf.TIMEOUT = int(os.getenv('TIMEOUT'))
     conf.HEROKU_APP_NAME = os.getenv('HEROKU_APP_NAME')
     assert_globs()
-
-

@@ -17,7 +17,7 @@ async def on_startup(
     await bot.set_my_commands(commands)
 
     loop = asyncio.get_event_loop()
-    loop.create_task(check_new_houses(dp, conf.TIMEOUT))
+    loop.create_task(check_new_houses(dp, sleep_time=conf.TIMEOUT))
 
 
 async def on_shutdown(
