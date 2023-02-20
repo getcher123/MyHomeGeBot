@@ -9,4 +9,9 @@ if CONF.INIT_TelegramBot:
     telegramBot = TelegramBot(TOKEN)
 
 send_message = telegramBot.send_message_handled
-TelegramBot, logger, log_call
+send_photo = telegramBot.send_photo_handled
+
+(
+    # TelegramBot,
+    logger, log_call
+)

@@ -35,8 +35,11 @@ async def send_messages(p: MyHomeParser, dp: Union[Dispatcher, types.Message]):
                     image_bytes_copy.seek(0)
 
                     if CONF.USE_SEND_PHOTO_WRAPPER:
-                        from main import telegramBot
-                        await telegramBot.send_photo(
+                        # assert telegramBot
+                        # await telegramBot.send_photo(
+                        from utils.telegrammy import send_photo
+
+                        send_photo(
                             user_id, photo_url=image_url, caption=msg,
                             parse_mode="Markdown",
                             auto_correct=CONF.AUTO_CORRECT,

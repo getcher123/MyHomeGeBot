@@ -6,7 +6,6 @@ import aiogram.utils
 import aiogram.utils.exceptions
 
 import tg_bot
-from utils.telegrammy import send_message
 
 
 class TelegramError(Exception): pass
@@ -62,6 +61,8 @@ class TelegramErrorHandler:
         except aiogram.utils.exceptions.CantParseEntities as e:
             reason, _ = cls.determine_error_reason(str(e), e)
             ##? await context.bot.send_message(chat_id=update.effective_chat.id, text=reason)
+            from utils.telegrammy import send_message
+
             await send_message(chat_id=update.effective_chat.id, text=f"An error occurred: {reason}")
             return reason, e
 

@@ -12,8 +12,12 @@ def shorten(a: Any, len: int, shorten=shorten):
 
 
 async def sleep(sleep_time: int, descr: str = ''):
-    log.info(f"Sleep for {sleep_time}..{f' ({descr})' if descr else ''}")
-    await asyncio.sleep(sleep_time)
+    try:
+        log.info(f"Sleep for {sleep_time}..{f' ({descr})' if descr else ''}")
+        await asyncio.sleep(sleep_time)
+    except:
+        log.exception(f"# fixme")
+        await asyncio.sleep(60)
 
 
 def get_var(var_name: str, default: Any = None,
