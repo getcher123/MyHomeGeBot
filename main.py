@@ -64,3 +64,14 @@ if __name__ == '__main__':
         testmod()
 
     main()
+
+# fixme 1st!
+# 2023-02-20T03:04:32.287218+00:00 app[web.1]:   File "/app/plugins/home_parser/messages/sender.py", line 42, in send_messages
+#
+# 2023-02-20T03:04:32.287218+00:00 app[web.1]:     await send_photo(
+#
+# 2023-02-20T03:04:32.287219+00:00 app[web.1]:   File "/app/utils/telegrammy/__init__.py", line 16, in send_photo
+#
+# 2023-02-20T03:04:32.287219+00:00 app[web.1]:     await telegramBot.send_photo_handled(
+#
+# 2023-02-20T03:04:32.287219+00:00 app[web.1]: TypeError: 'coroutine' object is not callable

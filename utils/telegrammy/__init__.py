@@ -11,7 +11,7 @@ if CONF.INIT_TelegramBot:
 ##send_photo = telegramBot.send_photo_handled
 # send_message = telegramBot.send_message_handled
 
-@log_call
+# @log_call
 async def send_photo(*a, **k):
     await telegramBot.send_photo_handled(
         *a,
@@ -20,7 +20,7 @@ async def send_photo(*a, **k):
         **k)
 
 
-@log_call
+# @log_call
 async def send_message(*a, **k):
     await telegramBot.send_message_handled(
         *a,

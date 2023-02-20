@@ -123,7 +123,7 @@ class TelegramBot:
 
         try:
             # Send the message
-            self.bot.send_message(chat_id=chat_id, text=text)
+            await self.bot.send_message(chat_id=chat_id, text=text)
         except TelegramError as e:
             logger.exception(f"Error sending message to chat {chat_id}: {e}")
             raise e
