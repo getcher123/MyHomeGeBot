@@ -1,5 +1,4 @@
 import re
-from functools import wraps
 from typing import Tuple, Optional
 
 import aiogram.utils
@@ -50,7 +49,8 @@ class TelegramErrorHandler:
         return re.sub(r'<.*?>', '', caption_text)
 
     @classmethod
-    async def handle_cant_parse_entities_exception(cls, update, context, fix_caption_text=True) -> Tuple[str, Optional[Exception]]:
+    async def handle_cant_parse_entities_exception(cls, update, fix_caption_text=True) -> Tuple[
+        str, Optional[Exception]]:
         try:
             if fix_caption_text:
                 caption_text = cls.fix_caption_text(update.message.caption)
@@ -79,8 +79,6 @@ class TelegramErrorHandler:
             return "Unknown error", exception
 
 
-handle_cant_parse_entities_exception = TelegramErrorHandler.handle_cant_parse_entities_exception
-
 
 def determine_error_reason(error_message: str, exception: Optional[Exception] = None) -> Tuple[str, Optional[Exception]]:
     """
@@ -108,14 +106,16 @@ def determine_error_reason(error_message: str, exception: Optional[Exception] = 
         return "Unknown error", exception
 
 
-def handle_cant_parse_entities_exception(func):
-    @wraps(func)
-    async def wrapper(update, context, *args, **kwargs):
-        try:
-            return await func(update, context, *args, **kwargs)
-        except aiogram.utils.exceptions.CantParseEntities as e:
-            error_msg = str(e)
-            error_reason, _ = determine_error_reason(error_msg, e)
-            ##await context.bot.send_message(chat_id=update.effective_chat.id, text=f"An error occurred: {error_reason}")
-            await send_message(chat_id=update.effective_chat.id, text=f"An error occurred: {error_reason}")
-    return wrapper
+handle_cant_parse_entities_exception = TelegramErrorHandler.handle_cant_parse_entities_exception
+# ~?^
+# def handle_cant_parse_entities_exception(func):
+#     @wraps(func)
+#     async def wrapper(update, context, *args, **kwargs):
+#         try:
+#             return await func(update, context, *args, **kwargs)
+#         except aiogram.utils.exceptions.CantParseEntities as e:
+#             error_msg = str(e)
+#             error_reason, _ = determine_error_reason(error_msg, e)
+#             ##await context.bot.send_message(chat_id=update.effective_chat.id, text=f"An error occurred: {error_reason}")
+#             await send_message(chat_id=update.effective_chat.id, text=f"An error occurred: {error_reason}")
+#     return wrapper

@@ -8,8 +8,6 @@ from typing import Dict, Tuple
 from plugins.home_parser import MyHomeParser
 from utils import log, log_call
 
-# from utils.telegrammy import TelegramBot
-
 Url = str
 
 
@@ -26,7 +24,7 @@ def if_exc_ret_err_txt(f):
 
 
 @if_exc_ret_err_txt
-@log_call
+# @log_call
 def get_tags_txt(full_desc_info: str, *, address: str = '', price: str = ''):
     address = address or full_desc_info.splitlines()[1]
     tags = []
@@ -42,7 +40,7 @@ def get_tags_txt(full_desc_info: str, *, address: str = '', price: str = ''):
     return tags_txt
 
 
-@log_call
+# @log_call
 def convert_int(var, val) -> int:
     try:
         price_val = int(val)
@@ -61,7 +59,7 @@ def get_price_val(price) -> int:
 
 
 @if_exc_ret_err_txt
-@log_call
+# @log_call
 def get_price_2_sqr_val(price, square):
     price_val = get_price_val(price)
     square_val = convert_int('square', square.replace(' м²', '')
@@ -75,7 +73,7 @@ def get_price_2_sqr_val(price, square):
 
 
 @if_exc_ret_err_txt
-@log_call
+#@log_call
 def get_tags_4_price(price_val: int, *, max_=1000):
     """
     >>> for p in (11, 150, 300, 900, 1111): print(p, get_tags_4_price(p))
@@ -105,7 +103,7 @@ def get_tags_4_price(price_val: int, *, max_=1000):
         return "undefined_price_interval!"
 
 
-@log_call
+#@log_call
 def get_msg_txt(p: MyHomeParser, url: Url, i: int, *,
                 prop_sep='     ',
                 ):
@@ -172,10 +170,10 @@ def make_message_correct(text: str, *,
     :param text: The text to make correct.
     :return: The corrected text.
 
-    >>> TelegramBot.make_message_correct("This message contains $pecial characters and is too long to be sent to Telegram.")
-    'This message contains pecial characters and is too long to be sent to Telegram'
-    >>> TelegramBot.make_message_correct("This message is too long to be sent to Telegram.")
-    'This message is too long to be sent to Telegram'
+    # >>> TelegramBot.make_message_correct("This message contains $pecial characters and is too long to be sent to Telegram.")
+    # 'This message contains pecial characters and is too long to be sent to Telegram'
+    # >>> TelegramBot.make_message_correct("This message is too long to be sent to Telegram.")
+    # 'This message is too long to be sent to Telegram'
     """
     # Remove any special characters
     corrected_text = re.sub('[^a-zA-Z0-9_ ]', '', text)
