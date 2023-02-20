@@ -7,7 +7,7 @@ from loguru import logger
 from _init.conf import LOGGING_LEVEL
 from _init.env_vars_globs import _log_call
 from settings.debug_settings import init_debug
-from utils.logger.calls_logger import get_a_kw_call_str
+from utils.logs.calls_logger import get_a_kw_call_str
 
 getLogger = logging.getLogger
 

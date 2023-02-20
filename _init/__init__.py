@@ -127,4 +127,4 @@ def init_bot():
 
     assert_all(bot, storage, dp)
 
-    return bot
+    return bot, storage, dp

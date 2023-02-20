@@ -5,12 +5,12 @@ from aiogram import types
 from aiogram.dispatcher import Dispatcher
 from aiogram.dispatcher import FSMContext
 
-from plugins.home_parser import MyHomeParser
-from plugins.home_parser.parser import check_status
 from bot.keyboards import set_link_keyboard
+from bot.states import Form
+from plugins.home_parser import MyHomeParser
 from plugins.home_parser.messages import MESSAGES
 from plugins.home_parser.messages.sender import send_messages
-from bot.states import Form
+from plugins.home_parser.parser import check_status
 from utils import logging, warn, get_var
 
 
@@ -155,6 +155,7 @@ def register_client_handlers(dp: Dispatcher) -> None:
     Args:
         dp (Dispatcher): Instance of the Dispatcher class.
     """
+    assert dp
     dp.register_message_handler(CommonHandlers.start_command, commands=['start'])
     dp.register_message_handler(CommonHandlers.help_command, commands=['help'])
     dp.register_message_handler(CommonHandlers.set_link, commands=['set_link'])

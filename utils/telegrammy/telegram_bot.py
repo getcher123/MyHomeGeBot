@@ -105,7 +105,7 @@ class TelegramBot:
         >>> bot.send_message(123456789, "This message contains $pecial characters and is too long to be sent to Telegram.", auto_correct=True)
 
         # Example with loguru
-        >>> bot.logger = logger
+        >>> bot.logs = logs
         >>> bot.send_message(123456789, "This message contains $pecial characters.")
         WARNING:telegram_bot:The message is incorrect: The message contains special characters: $"
         """
@@ -167,7 +167,7 @@ class TelegramBot:
 
     python
 
-        >>> bot.logger = logger
+        >>> bot.logs = logs
         >>> bot.send_photo(123456789, "https://example.com/photo.jpg", "This caption contains $pecial characters.")
         WARNING:telegram_bot:The caption is incorrect: The message contains special characters: $"
         """

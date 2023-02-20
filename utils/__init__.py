@@ -3,8 +3,8 @@ from warnings import warn
 
 from .common import *
 from .common import shorten
-from .logger import log, logging, init_logging, logger, getLogger
-from .logger.calls_logger import log_call
+from .logs import log, logging, init_logging, logger, getLogger
+from .logs.calls_logger import log_call
 
 __all__ = [
     'log',

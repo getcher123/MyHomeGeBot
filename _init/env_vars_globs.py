@@ -173,6 +173,7 @@ if __name__ == '__main__':
 @_log_call
 def assert_globs():
     from _init import conf
+    from _init import assert_all
     assert_all(
         conf.APP_NAME,
         conf.TOKEN,

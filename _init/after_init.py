@@ -1,9 +1,9 @@
 import asyncio
 
-import conf
 from bot.bot_commands_settings import commands
 from plugins import check_new_houses
 from settings.webhook_settings import WEBHOOK_URL
+from . import conf
 
 
 async def on_startup(
@@ -11,7 +11,8 @@ async def on_startup(
 ) -> None:
     assert dispatcher
     from main import bot, dp
-    assert bot
+    assert all((bot, dp))
+
     await bot.set_webhook(WEBHOOK_URL, drop_pending_updates=True)
     await bot.set_my_commands(commands)
 

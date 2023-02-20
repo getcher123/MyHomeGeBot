@@ -30,12 +30,13 @@ dp: Dispatcher = None
 
 @_log_call
 def main_regular() -> None:
+    global bot, storage, dp
     init_globals()
     assert_globs()
 
     init_logging()
 
-    bot = init_bot()
+    bot, storage, dp = init_bot()
 
     log.debug(f"# Registration of handlers:..")
     common.register_client_handlers(dp)
@@ -68,6 +69,7 @@ def main():
             # print_env_vars()
             main_get_args()
             # print_env_vars()
+            assert_globs()
 
 
 if __name__ == '__main__':

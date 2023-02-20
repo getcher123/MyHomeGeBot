@@ -4,7 +4,7 @@ from textwrap import shorten
 from typing import Any
 
 # import logging as log
-from .logger import log
+from .logs import log
 
 
 def shorten(a: Any, len: int, shorten=shorten):
