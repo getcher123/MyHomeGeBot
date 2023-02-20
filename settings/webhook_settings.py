@@ -1,7 +1,11 @@
 """Settings required to run the webhook"""
 import os
 
-from .bot_settings import TOKEN
+from loguru import logger as log
+
+from _init.conf import TOKEN
+from _init.env_vars_globs import _log_call
+from . import CONF
 
 # Application name
 HEROKU_APP_NAME = os.getenv('HEROKU_APP_NAME')
@@ -15,7 +19,20 @@ WEBHOOK_URL = f'{WEBHOOK_HOST}{WEBHOOK_PATH}'
 WEBAPP_HOST = '0.0.0.0'
 WEBAPP_PORT = os.getenv('PORT', default=8000)
 
-# Сhecking for the existence of a variable
-if (not HEROKU_APP_NAME 
-    or not WEBAPP_PORT):
-    exit()
+
+@log.catch
+@_log_call(with_call_stack=True)
+def __set_local_env_vars(*, raise_exc=CONF.RAISE_IF_ENV_VAR_NOT_SET):
+    # Сhecking for the existence of a variable
+    if (
+            not HEROKU_APP_NAME
+            or not WEBAPP_PORT
+    ):
+        log.error(msg := f"""
+            not {HEROKU_APP_NAME = }
+            or not {WEBAPP_PORT = }
+        """)
+        if raise_exc:
+            raise Exception(msg)
+        else:
+            exit()

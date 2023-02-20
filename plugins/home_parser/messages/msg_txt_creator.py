@@ -6,7 +6,8 @@ from typing import Dict, Tuple
 
 from plugins.home_parser import MyHomeParser
 from utils import log, log_call
-from utils.telegrammy import TelegramBot
+
+# from utils.telegrammy import TelegramBot
 
 Url = str
 
@@ -86,7 +87,7 @@ def get_tags_4_price(price_val: int, *, max_=1000):
     prices_diaps: Dict[str: Tuple[int, int]] = {}
     prev = 0
     for price in range(0, max_, 100):
-        # logd(f"{(prev, price) = }")
+        # _logd(f"{(prev, price) = }")
         prices_diaps.update({
             f"{prev}_{price}": (prev, price)
         })
@@ -153,5 +154,6 @@ def get_msg_txt(p: MyHomeParser, url: Url, i: int, *,
             )
 
 def check_text_4_bot(text: str) -> str:
+    from utils.telegrammy import TelegramBot
     text = TelegramBot.make_message_correct(text)
     return text

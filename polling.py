@@ -1,15 +1,15 @@
 """Polling entry point"""
-from utils import logging
 import asyncio
-
-from settings.bot_settings import TOKEN
-from bot.bot_commands_settings import commands
-
-from bot.handlers import common
 
 from aiogram import Bot
 from aiogram.dispatcher import Dispatcher
 
+from _init.conf import TOKEN
+from bot.bot_commands_settings import commands
+from bot.handlers import common
+from utils import logging, init_logging, log
+
+##?c from settings.bot_settings import TOKEN
 
 logger = logging.getLogger(__name__)
 
@@ -17,26 +17,23 @@ logger = logging.getLogger(__name__)
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)
 
-# Registration of commands displayed in the Telegram interface
+
 async def set_commands(bot: Bot):
+    # Registration of commands displayed in the Telegram interface
     await bot.set_my_commands(commands)
 
 
 async def main() -> None:
-    # Setting up logging
-    from settings.debug_settings import LOGGING_LEVEL
-    logging.basicConfig(
-        level=LOGGING_LEVEL,
-        format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
-    )
+    log.debug('# Setting up logging')
+    init_logging()
 
-    # Registration of handlers
+    log.debug('# Registration of handlers')
     common.register_client_handlers(dp)
 
-    # Installing bot commands
+    log.debug('# Installing bot commands')
     await set_commands(bot)
 
-    # Polling start
+    log.debug('# Polling start')
     await dp.start_polling()
 
 

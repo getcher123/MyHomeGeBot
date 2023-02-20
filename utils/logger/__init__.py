@@ -1,21 +1,29 @@
+# todo: consolidate loggers!
 import logging as log
 import logging as logging
 
 from loguru import logger
 
-# todo: consolidate loggers!
-from settings.debug_settings import LOGGING_LEVEL
+from _init.conf import LOGGING_LEVEL
+from _init.env_vars_globs import _log_call
+from settings.debug_settings import init_debug
+from utils.logger.calls_logger import get_a_kw_call_str
 
-log.basicConfig(level=LOGGING_LEVEL)
 getLogger = logging.getLogger
 
-log, logging, logger
 
-
-def init_logging():
+@_log_call
+def init_logging(*,
+                 logging_level=LOGGING_LEVEL
+                 ):
+    # ? from settings.debug_settings import LOGGING_LEVEL
+    init_debug()
     # Setting up logging
     logging.basicConfig(
-        level=LOGGING_LEVEL,
+        level=logging_level,
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
     )
     return logging
+
+
+log, logging, logger

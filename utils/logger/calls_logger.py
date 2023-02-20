@@ -1,19 +1,21 @@
+# todo: format well
+
 # /Users/user/github.com/hnkovr/__core_logger_copy1.py
 import functools
 import inspect
 
-inspect
 from textwrap import shorten
 from types import FunctionType
 from typing import Any
 
-from utils.logger import log
+inspect
 
-# from core.core import pass_
-# from ..loggy._my_logger import logd, get_a_kw_call_str
 pass_ = lambda _: _
-logd = log.debug
+# `?_logd = log.debug
+logd = print
 quote = pass_
+
+
 # from ..core.stringy import shortext
 def shortext(s: Any, len=111, **k) -> str:
     """
@@ -52,6 +54,7 @@ def __get_a_kw_call_str(func: FunctionType, args: tuple, kwargs: dict): return (
     f"{f' {fmt_a_or_kw(kwargs)}' if kwargs else ''}"
     ')->'
 )
+
 def __value_shortext(s: Any, len=111,
                      # DEF_LENGHTS.VAR_VALUE,
                      len_tail_percent=0.4) -> str:
@@ -59,12 +62,13 @@ def __value_shortext(s: Any, len=111,
 get_a_kw_call_str = __get_a_kw_call_str
 value_shortext = __value_shortext
 # from: _log_args_and_result()
-def _log_call(func):
+def _log_call1(func):
     """
     A decorator that logs the input arguments and the result of the decorated function or method.
     #ChatGPT by created w/o changes (almost))
     """
     print_fn = logd
+
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         print_fn(
@@ -99,21 +103,33 @@ def _log_call2(with_docstrings=True, with_args_descr=True, use_catch=False, prin
             else:
                 print_fn(f"> call {func.__name__} returned: {value_shortext(result)}")
                 return result
+
         return inner
+
     return wrapper
-#`?log_call = _log_call2
-log_call = _log_call
+
+
+# `?log_call = _log_call2
+log_call = _log_call1
+
 if __name__ == '__main__':
-    @_log_call
+    @_log_call1
     def f(): pass
+
+
     f()
     import loguru
+
     logger = loguru.logger
+
+
     @_log_call2(with_docstrings=False, use_catch=True, print_fn=logger.debug)
     def divide(a: int, b: int) -> float:
         """
         Divides a by b.
         """
         return a / b
-    divide(4, 2)  # Output: DEBUG:__main__:4 / 2 -> returned: 2.0
+
+
+    divide(4, 2)  # Output: val:__main__:4 / 2 -> returned: 2.0
     divide(4, 0)  # Output: ERROR:__main__:4 / 0 -> Raised: ZeroDivisionError('division by zero')

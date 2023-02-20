@@ -1,3 +1,4 @@
+# d from _log_call import _logd;_logd(__file__)
 import logging
 from typing import List
 
@@ -7,7 +8,7 @@ from aiogram.types.base import TelegramObject
 from utils import shorten
 
 
-def reg_bot_commands(res_commands: List[TelegramObject], **commands):
+def reg_bot_commands(res_commands: List[TelegramObject] = [], **commands):
     for command, description in commands.items():
         res_commands.append(
             BotCommand(command=f'/{command}', description=description)

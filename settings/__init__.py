@@ -1,4 +1,5 @@
 import os
+from typing import Any
 
 from loguru import logger as log
 
@@ -19,7 +20,7 @@ def check_globs(name, val, *, exit_if_not_set=CONF.EXIT_IF_ENV_VAR_NOT_SET):
 
 @log.catch
 # @log_call
-def set_glob(name, val):
+def set_glob(name: str, val: Any):
     globals()[name] = val = os.getenv(name)
     check_globs(name, val)
-    return globals()[name]
+    return val
