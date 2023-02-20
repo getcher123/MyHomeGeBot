@@ -28,6 +28,7 @@ async def send_messages(p: MyHomeParser, dp: Union[Dispatcher, types.Message]):
                 log.error('<USER_IDS> is not founded or empty!')
                 continue
 
+            log.info(f'# Sending {user_ids = }:..')
             for user_id in user_ids:
                 try:
                     log.info(f'# send_photo {user_id = }')

@@ -7,6 +7,7 @@ from settings.conf import CONF
 
 
 @log.catch
+# @_log_call
 def check_globs(name, val, *, exit_if_not_set=CONF.EXIT_IF_ENV_VAR_NOT_SET):
     # Checking for the existence of a variable
     if not val:

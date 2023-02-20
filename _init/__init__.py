@@ -11,8 +11,9 @@ from _init._init_tools import assert_all
 from _init.conf import LOGGING_LEVEL
 from _init.env_vars_globs import _log_call, assert_globs
 from _init.init_tools import parse_args, load_config, is_env_vars_inited, get_def
-from bot.tools import reg_bot_commands
-from utils import init_logging, warn
+
+
+# from bot.tools import reg_bot_commands
 
 
 # @_log_call
@@ -20,22 +21,23 @@ from utils import init_logging, warn
 def set_commands(bot: Bot):
     log.info("# Registration of commands displayed in the Telegram interface:..")
     # global commands
-    from bot.bot_commands_settings import commands
 
-    logging.debug(f'#3 {commands = }')
-    commands = reg_bot_commands(
-        start="Bot start🚀",
-        help="Help🆘",
-        set_link='установить новую ссылку для поиска',
-        show='посмотреть всю выдачу',
-        cancel='отменить действие',
-        show_link='Посмотреть текущую ссылку для поиска',
-    )
-    logging.debug(f'#4 {commands = }')
+    # logging.debug(f'#3 {commands = }')
+    # commands = reg_bot_commands(
+    #     start="Bot start🚀",
+    #     help="Help🆘",
+    #     set_link='установить новую ссылку для поиска',
+    #     show='посмотреть всю выдачу',
+    #     cancel='отменить действие',
+    #     show_link='Посмотреть текущую ссылку для поиска',
+    # )
+    # logging.debug(f'#4 {commands = }')
 
 
 #@_log_call
 def main_get_args() -> None:
+    from utils import init_logging, warn
+
     log.info(
         f"""# Run main_get_args for getting args from cli: {sys.argv[1:] = }"""
     )
@@ -85,9 +87,12 @@ def init_env_defaults_by_args(args):
 
 #@_log_call
 def init_globs():
-    global bot, storage, dp
+    # global bot, storage, dp
+    from tg_bot import bot, dp
     log.debug(
-        f"""# Initialize main globs: {bot = }; {storage = }; {dp = }."""
+        f"""# Initialize main globs: {bot = }; 
+        {dp = }.
+        """  # fixme: {storage = };
     )
     # globs = Globals()
     bot = Bot(token=conf.TOKEN)

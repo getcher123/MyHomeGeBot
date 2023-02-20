@@ -5,7 +5,7 @@ from settings import check_globs
 
 TOKEN: str = None
 HEROKU_APP_NAME: str = None
-DEBUG: str = None
+DEBUG: str = 'None'
 PORT: int = None
 TIMEOUT: int = None
 LOGGING_LEVEL: int = 10
@@ -27,7 +27,7 @@ def init_debug():
     # ~? DEBUG = set_glob('DEBUG')
 
     # # Getting the DEBUG value from an environment variable
-    DEBUG = os.getenv('DEBUG')
+    DEBUG = os.getenv('DEBUG', DEBUG)
     check_globs('DEBUG', DEBUG)
 
     if DEBUG:

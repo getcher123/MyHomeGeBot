@@ -8,9 +8,8 @@
 from aiogram.utils.executor import start_webhook
 
 import tg_bot
-from _init import set_commands, main_get_args, init_globals, assert_globs
+from _init import set_commands, init_globals, assert_globs
 from _init.env_vars_globs import is_it_on_heroku_running
-from _init.init_tools import is_env_vars_inited
 from bot.handlers import common
 from settings import CONF
 from settings.webhook_settings import (WEBHOOK_PATH, WEBAPP_HOST, WEBAPP_PORT)
@@ -51,10 +50,8 @@ def main():
     if is_it_on_heroku_running():
         main_regular()
     else:
-        if not is_env_vars_inited():
-            assert not is_it_on_heroku_running()
-            main_get_args()
-            assert_globs()
+        from polling import init_local_run
+        init_local_run()
 
 
 if __name__ == '__main__':
