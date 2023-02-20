@@ -2,6 +2,7 @@
 # 4cg:
 # improve this code, add typing, doctests, wrap into class, if it'll be better design:
 # use reST-styled docstrings and make them maximally shorter, use fastcore.store_attrs(), use @dataclass, if it's suiteable, improve var-names where it's suitable
+import re
 from typing import Dict, Tuple
 
 from plugins.home_parser import MyHomeParser
@@ -149,11 +150,38 @@ def get_msg_txt(p: MyHomeParser, url: Url, i: int, *,
         add_info = str(e)
 
     return check_text_4_bot(f"{full_descr_info}"
-            f" \n"
-            f"{add_info}"
-            )
+                            f" \n"
+                            f"{add_info}"
+                            )
+
 
 def check_text_4_bot(text: str) -> str:
-    from utils.telegrammy import TelegramBot
-    text = TelegramBot.make_message_correct(text)
+    # text = TelegramBot.make_message_correct(text)
+    text = make_message_correct(text)
     return text
+
+
+@log_call
+# /Users/user/github.com/getcher123/MyHomeGeBot/utils/telegrammy/telegram_bot.py
+def make_message_correct(text: str, *,
+                         MAX_MESSAGE_LENGTH=200
+                         ) -> str:
+    """
+    Makes a given message correct by removing any special characters and shortening it if necessary.
+
+    :param text: The text to make correct.
+    :return: The corrected text.
+
+    >>> TelegramBot.make_message_correct("This message contains $pecial characters and is too long to be sent to Telegram.")
+    'This message contains pecial characters and is too long to be sent to Telegram'
+    >>> TelegramBot.make_message_correct("This message is too long to be sent to Telegram.")
+    'This message is too long to be sent to Telegram'
+    """
+    # Remove any special characters
+    corrected_text = re.sub('[^a-zA-Z0-9_ ]', '', text)
+
+    # Shorten the message if necessary
+    if len(corrected_text) > MAX_MESSAGE_LENGTH:
+        corrected_text = corrected_text[:MAX_MESSAGE_LENGTH]
+
+    return corrected_text

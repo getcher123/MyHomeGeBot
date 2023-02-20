@@ -3,12 +3,13 @@ import re
 from aiogram import Bot
 from fastcore.foundation import L
 
-# from main import telegramBot
-# send_message = telegramBot.send_message
-
-from utils import logger, log_call
+from utils import logger
 from utils.telegrammy.err_handler import TelegramError
 from utils.telegrammy.err_handler import handle_cant_parse_entities_exception
+
+
+# from main import telegramBot
+# send_message = telegramBot.send_message
 
 
 class TelegramBot:
@@ -51,28 +52,29 @@ class TelegramBot:
 
         return is_correct, incorrect_symbols
 
-    @log_call
-    @staticmethod
-    def make_message_correct(text: str) -> str:
-        """
-        Makes a given message correct by removing any special characters and shortening it if necessary.
-
-        :param text: The text to make correct.
-        :return: The corrected text.
-
-        >>> TelegramBot.make_message_correct("This message contains $pecial characters and is too long to be sent to Telegram.")
-        'This message contains pecial characters and is too long to be sent to Telegram'
-        >>> TelegramBot.make_message_correct("This message is too long to be sent to Telegram.")
-        'This message is too long to be sent to Telegram'
-        """
-        # Remove any special characters
-        corrected_text = re.sub('[^a-zA-Z0-9_ ]', '', text)
-
-        # Shorten the message if necessary
-        if len(corrected_text) > TelegramBot.MAX_MESSAGE_LENGTH:
-            corrected_text = corrected_text[:TelegramBot.MAX_MESSAGE_LENGTH]
-
-        return corrected_text
+    # @staticmethod
+    # @log_call
+    # # /Users/user/github.com/getcher123/MyHomeGeBot/utils/telegrammy/telegram_bot.py
+    # def make_message_correct(text: str) -> str:
+    #     """
+    #     Makes a given message correct by removing any special characters and shortening it if necessary.
+    #
+    #     :param text: The text to make correct.
+    #     :return: The corrected text.
+    #
+    #     >>> TelegramBot.make_message_correct("This message contains $pecial characters and is too long to be sent to Telegram.")
+    #     'This message contains pecial characters and is too long to be sent to Telegram'
+    #     >>> TelegramBot.make_message_correct("This message is too long to be sent to Telegram.")
+    #     'This message is too long to be sent to Telegram'
+    #     """
+    #     # Remove any special characters
+    #     corrected_text = re.sub('[^a-zA-Z0-9_ ]', '', text)
+    #
+    #     # Shorten the message if necessary
+    #     if len(corrected_text) > TelegramBot.MAX_MESSAGE_LENGTH:
+    #         corrected_text = corrected_text[:TelegramBot.MAX_MESSAGE_LENGTH]
+    #
+    #     return corrected_text
 
     ##@handle_cant_parse_entities_exception
     def send_message(self, chat_id: int, text: str, auto_correct: bool = False) -> None:
