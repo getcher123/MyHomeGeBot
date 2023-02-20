@@ -9,7 +9,18 @@ if CONF.INIT_TelegramBot:
     telegramBot = TelegramBot(TOKEN)
 
 send_message = telegramBot.send_message_handled
-send_photo = telegramBot.send_photo_handled
+
+
+##send_photo = telegramBot.send_photo_handled
+
+@log_call
+def send_photo(*a, **k):
+    async telegramBot.send_photo_handled(
+        *a,
+        parse_mode="Markdown",
+        auto_correct=CONF.AUTO_CORRECT,
+        **k)
+
 
 (
     # TelegramBot,
