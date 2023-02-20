@@ -16,6 +16,8 @@ getLogger = logging.getLogger
 def init_logging(*,
                  logging_level=LOGGING_LEVEL
                  ):
+    log.info(f"💻 Init logging:..")
+
     # ? from settings.debug_settings import LOGGING_LEVEL
     init_debug()
     # Setting up logging

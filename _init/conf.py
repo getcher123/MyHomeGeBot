@@ -12,6 +12,15 @@ TIMEOUT: int = None
 LOGGING_LEVEL: int = 10
 
 
+class Globals:
+    def __init__(self,
+                 ):
+        from _init import is_env_vars_inited
+
+        assert is_env_vars_inited()
+        self.TIMEOUT = int(os.getenv('TIMEOUT', get_def('TIMEOUT')))
+
+
 @_log_call(with_call_stack=True)
 def init_debug():
     global DEBUG, LOGGING_LEVEL

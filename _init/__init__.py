@@ -1,22 +1,24 @@
 import logging
 import os
+import sys
 
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from loguru import logger as log
 
 from _init import conf
+from _init._init_tools import assert_all
 from _init.conf import LOGGING_LEVEL
-from _init.env_vars_globs import _log_call
+from _init.env_vars_globs import _log_call, assert_globs
 from _init.init_tools import parse_args, load_config, is_env_vars_inited, get_def
 from bot.tools import reg_bot_commands
-from utils import init_logging
+from utils import init_logging, warn
 
 
 @_log_call
 # async
 def set_commands(bot: Bot):
-    # Registration of commands displayed in the Telegram interface
+    log.info("# Registration of commands displayed in the Telegram interface:..")
     # global commands
     from bot.bot_commands_settings import commands
 
@@ -32,12 +34,18 @@ def set_commands(bot: Bot):
     logging.debug(f'#4 {commands = }')
 
 
+@_log_call
 def main_get_args() -> None:
+    log.info(
+        f"""# Run main_get_args for getting args from cli: {sys.argv[1:] = }"""
+    )
     global globs, dp
     args = parse_args()
 
-    # Load configuration from file, if specified
-    if args.config:
+    log.info(f"# Load configuration from file <{args.config}>, if specified")
+    if not args.config:
+        warn(f"Not not args.config!")
+    else:
         log.debug(f"# {args.config = }")
         config = load_config(args.config)
         log.debug(f"# {config = }")
@@ -53,46 +61,70 @@ def main_get_args() -> None:
         {args.token =  } 
         {args.app_name =}
         """)
-
-    # Initialize environment variables, if not already set
-    os.environ.setdefault("val", str(args.debug))
-    os.environ.setdefault("PORT", str(args.port))
-    os.environ.setdefault("TOKEN", str(args.token))
-    if args.app_name is not None:
-        os.environ.setdefault("HEROKU_APP_NAME", str(args.app_name))
-
     init_logging(
         logging_level=logging.DEBUG if args.debug else LOGGING_LEVEL
     )
+    init_env_defaults_by_args(args)
+    init_globals_by_args(args)
+    init_globs()
+    assert_globs()
 
-    # Declaring and initializing bot and dispatcher objects
-    conf.APP_NAME = args.app_name
-    conf.TOKEN = args.token
-    conf.DEBUG = args.debug
-    conf.PORT = args.port
-    conf.TIMEOUT = args.timeout
+@_log_call
+def init_env_defaults_by_args(args):
+    log.info(
+        f"""# Initialize environment variables, if not already set by {args = }"""
+    )
+    os.environ.setdefault("DEBUG", str(args.debug))
+    os.environ.setdefault("PORT", str(args.port))
+    os.environ.setdefault("TOKEN", str(args.token))
+    ##if a.app_name is not None:
+    assert args.app_name
+    os.environ.setdefault("HEROKU_APP_NAME", str(args.app_name))
 
+
+@_log_call
+def init_globs():
+    global bot, storage, dp
+    log.debug(
+        f"""# Initialize main globs: {bot = }; {storage = }; {dp = }."""
+    )
     # globs = Globals()
     bot = Bot(token=conf.TOKEN)
     storage = MemoryStorage()
     dp = Dispatcher(bot, storage=storage)
 
 
-class Globals:
-    def __init__(self,
-                 ):
-        assert is_env_vars_inited()
-        self.TIMEOUT = int(os.getenv('TIMEOUT', get_def('TIMEOUT')))
+@_log_call
+def init_globals_by_args(args):
+    log.info("""# Declaring and initializing bot and dispatcher objects""")
+    conf.APP_NAME = args.app_name
+    conf.TOKEN = args.token
+    conf.DEBUG = args.debug
+    conf.PORT = args.port
+    conf.TIMEOUT = args.timeout
 
 
+@_log_call
+def init_globals():
+    log.info("""# Declaring and initializing bot and dispatcher objects""")
+    conf.TOKEN = os.getenv('TOKEN')
+    conf.DEBUG = os.getenv('DEBUG')
+    conf.PORT = os.getenv('PORT')
+    conf.TIMEOUT = os.getenv('TIMEOUT')
+    conf.APP_NAME = os.getenv('HEROKU_APP_NAME')
+    assert_globs()
+
+
+@_log_call
 def init_bot():
+    log.info(f"🤖 Init bot!..")
     global bot, storage, dp
     assert conf.TOKEN, f"TOKEN is empty!"
+
     bot = Bot(token=conf.TOKEN)
     storage = MemoryStorage()
     dp = Dispatcher(bot, storage=storage)
 
-    xxx = bot, storage, dp
-    assert all(xxx), xxx
+    assert_all(bot, storage, dp)
 
     return bot

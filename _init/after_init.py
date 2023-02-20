@@ -16,9 +16,6 @@ async def on_startup(
     await bot.set_my_commands(commands)
 
     loop = asyncio.get_event_loop()
-
-    # global globs
-    ##loop.create_task(check_new_houses(dp, Globals.TIMEOUT))
     loop.create_task(check_new_houses(dp, conf.TIMEOUT))
 
 
@@ -29,8 +26,3 @@ async def on_shutdown(
     assert bot
     await bot.delete_webhook()
 
-#
-# async def on_startup(dispatcher) -> None:
-#     assert dispatcher
-#     from main import bot
-#     await bot.set_webhook(WEBHOOK_URL, drop_pending_updates=True)

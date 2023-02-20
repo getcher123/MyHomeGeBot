@@ -1,4 +1,5 @@
 class CONF:
+    LAPTOP_LOCALHOST_NAME = "users-MacBook-Pro.local"
     RAISE_IF_ENV_VAR_NOT_SET = True
     EXIT_IF_ENV_VAR_NOT_SET = True
     INIT_TelegramBot = True

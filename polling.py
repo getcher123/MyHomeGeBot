@@ -24,7 +24,7 @@ async def set_commands(bot: Bot):
 
 
 async def main() -> None:
-    log.debug('# Setting up logging')
+    log.info('# Setting up logging')
     init_logging()
 
     log.debug('# Registration of handlers')

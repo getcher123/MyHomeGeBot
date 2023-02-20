@@ -1,12 +1,17 @@
 import functools
 import inspect
 import os
+import socket
+import traceback
 from types import FunctionType
 from typing import Any, Optional
 
 from loguru import logger as log
 
 from settings import CONF
+
+# from _init_tools import assert_all
+# conf
 
 try:
     from PyYAML import yaml
@@ -30,8 +35,13 @@ def get_project_files_names():
     return project_files
 
 
-def _log_call(func=None, with_call_stack=CONF._log_call_with_call_stack,
-              print=log.info
+def fmt_txt(e):
+    e = str(e)
+    return e if not '\n' in e else f"\n{e}\n"
+
+
+def _log_call(func=None, *, with_call_stack=CONF._log_call_with_call_stack,
+              print=log.debug, print_exc=True,
               ):
     pref = '> call '
     pass_ = lambda _: _
@@ -52,14 +62,25 @@ def _log_call(func=None, with_call_stack=CONF._log_call_with_call_stack,
                 filename = frame.filename.split("/")[-1]
                 lineno = frame.lineno
                 funcname = frame.function
-                if filename in get_project_files_names():
+                if (filename in get_project_files_names()
+                        and funcname not in 'wrapper '.split()
+                ):
                     frame_info.append(f"{filename}:{lineno}:{funcname}")
         call_stack_info = ' -> '.join(frame_info) + ' -> ' if with_call_stack else ''
         print(
             # call_stack_info +
             __get_a_kw_call_str(func, args, kwargs))
-        result = func(*args, **kwargs)
-        if result is not None:
+        try:
+            result = func(*args, **kwargs)
+        except Exception as e:
+            if call_stack_info != ' -> ':
+                log.error(f"# <{fmt_txt(e)}> while:\n{call_stack_info = }")
+            traceback.print_exc() if print_exc else log.exception(
+                f"In {_log_call.__name__}({func.__name__}):.."
+            )
+            raise
+
+        if result is not None or with_call_stack:
             print(
                 call_stack_info +
                 f'{pref}{func.__name__} returned: {str(result)[:111]}{"..." if len(str(result)) > 111 else ""}')
@@ -147,3 +168,23 @@ if __name__ == '__main__':
     import doctest
 
     doctest.testmod()
+
+
+@_log_call
+def assert_globs():
+    from _init import conf
+    assert_all(
+        conf.APP_NAME,
+        conf.TOKEN,
+        conf.DEBUG,
+        conf.PORT,
+        conf.TIMEOUT,
+        args='APP_NAME TOKEN DEBUG PORT TIMEOUT'.split()
+    )
+
+
+@_log_call
+def is_it_on_heroku_running():
+    hostname = socket.gethostname()
+    print("Hostname:", hostname)
+    return not hostname.endswith(CONF.LAPTOP_LOCALHOST_NAME)
