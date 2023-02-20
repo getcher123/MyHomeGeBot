@@ -15,7 +15,7 @@ from bot.tools import reg_bot_commands
 from utils import init_logging, warn
 
 
-@_log_call
+# @_log_call
 # async
 def set_commands(bot: Bot):
     log.info("# Registration of commands displayed in the Telegram interface:..")
@@ -34,7 +34,7 @@ def set_commands(bot: Bot):
     logging.debug(f'#4 {commands = }')
 
 
-@_log_call
+#@_log_call
 def main_get_args() -> None:
     log.info(
         f"""# Run main_get_args for getting args from cli: {sys.argv[1:] = }"""
@@ -69,7 +69,8 @@ def main_get_args() -> None:
     init_globs()
     assert_globs()
 
-@_log_call
+
+#@_log_call
 def init_env_defaults_by_args(args):
     log.info(
         f"""# Initialize environment variables, if not already set by {args = }"""
@@ -82,7 +83,7 @@ def init_env_defaults_by_args(args):
     os.environ.setdefault("HEROKU_APP_NAME", str(args.app_name))
 
 
-@_log_call
+#@_log_call
 def init_globs():
     global bot, storage, dp
     log.debug(
@@ -94,7 +95,7 @@ def init_globs():
     dp = Dispatcher(bot, storage=storage)
 
 
-@_log_call
+#@_log_call
 def init_globals_by_args(args):
     log.info("""# Declaring and initializing bot and dispatcher objects""")
     conf.HEROKU_APP_NAME = args.app_name
@@ -104,7 +105,7 @@ def init_globals_by_args(args):
     conf.TIMEOUT = args.timeout
 
 
-@_log_call
+#@_log_call
 def init_globals():
     log.info("""# Declaring and initializing bot and dispatcher objects""")
     conf.TOKEN = os.getenv('TOKEN')

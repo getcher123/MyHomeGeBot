@@ -3,7 +3,7 @@ from aiogram import Dispatcher, Bot
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from loguru import logger as log
 
-from _init import _log_call, conf, assert_all
+from _init import conf, assert_all
 
 # Declaring and initializing bot and dispatcher objects
 bot: aiogram.Bot = None
@@ -11,7 +11,7 @@ storage: MemoryStorage = None
 dp: Dispatcher = None
 
 
-@_log_call
+# @_log_call
 def init_bot():
     log.info(f"🤖 Init bot!..")
     global bot, storage, dp

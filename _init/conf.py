@@ -1,7 +1,6 @@
 import logging
 import os
 
-from _init.env_vars_globs import _log_call
 from settings import check_globs
 
 TOKEN: str = None
@@ -22,7 +21,7 @@ class Globals:
         self.TIMEOUT = int(os.getenv('TIMEOUT', get_def('TIMEOUT')))
 
 
-@_log_call(with_call_stack=True)
+# @_log_call(with_call_stack=True)
 def init_debug():
     global DEBUG, LOGGING_LEVEL
     # ~? DEBUG = set_glob('DEBUG')

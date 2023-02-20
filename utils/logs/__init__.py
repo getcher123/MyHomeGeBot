@@ -5,14 +5,13 @@ import logging as logging
 from loguru import logger
 
 from _init.conf import LOGGING_LEVEL
-from _init.env_vars_globs import _log_call
 from settings.debug_settings import init_debug
 from utils.logs.calls_logger import get_a_kw_call_str
 
 getLogger = logging.getLogger
 
 
-@_log_call
+# @_log_call
 def init_logging(*,
                  logging_level=LOGGING_LEVEL
                  ):

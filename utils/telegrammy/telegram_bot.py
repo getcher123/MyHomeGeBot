@@ -3,9 +3,8 @@ import re
 from aiogram import Bot
 from fastcore.foundation import L
 
-from utils import logger, log_call
-from utils.telegrammy.err_handler import TelegramError
-from utils.telegrammy.err_handler import handle_cant_parse_entities_exception
+from utils import logger
+from utils.telegrammy.err_handler import TelegramError, TelegramErrorHandler
 
 
 # from main import telegramBot
@@ -18,8 +17,8 @@ class TelegramBot:
     def __init__(self, bot_token: str):
         self.bot_token = bot_token
         self.bot = Bot(token=bot_token)
-        self.send_message_handled = handle_cant_parse_entities_exception(TelegramBot.send_message)
-        self.send_photo_handled = handle_cant_parse_entities_exception(TelegramBot.send_photo)
+        self.send_message_handled = TelegramErrorHandler.handle_cant_parse_entities_exception(TelegramBot.send_message)
+        self.send_photo_handled = TelegramErrorHandler.handle_cant_parse_entities_exception(TelegramBot.send_photo)
 
     @staticmethod
     def is_message_correct(text: str) -> (bool, str):
@@ -129,7 +128,7 @@ class TelegramBot:
             logger.exception(f"Error sending message to chat {chat_id}: {e}")
             raise e
 
-    @log_call
+    # !w @log_call
     # @handle_cant_parse_entities_exception
     async def send_photo(self, chat_id: int, photo_url: str, caption: str = None,
                          auto_correct: bool = False, **send_photo_kwargs

@@ -8,7 +8,7 @@
 from aiogram.utils.executor import start_webhook
 
 import tg_bot
-from _init import set_commands, main_get_args, _log_call, init_globals, assert_globs
+from _init import set_commands, main_get_args, init_globals, assert_globs
 from _init.env_vars_globs import is_it_on_heroku_running
 from _init.init_tools import is_env_vars_inited
 from bot.handlers import common
@@ -18,10 +18,7 @@ from tg_bot import init_bot
 from utils import init_logging, getLogger, log
 
 logger = getLogger(__name__)
-# print = log.info
-print = logger.info
 
-@_log_call
 def main_regular() -> None:
     init_globals()
     assert_globs()
@@ -50,17 +47,13 @@ def main_regular() -> None:
     log.debug(f"✅")
 
 
-@_log_call
 def main():
     if is_it_on_heroku_running():
         main_regular()
     else:
-        # set_env_var('HEROKU_APP_NAME')
         if not is_env_vars_inited():
             assert not is_it_on_heroku_running()
-            # print_env_vars()
             main_get_args()
-            # print_env_vars()
             assert_globs()
 
 

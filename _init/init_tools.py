@@ -6,7 +6,7 @@ from typing import Any
 
 from loguru import logger as log
 
-from _init.env_vars_globs import load_param, _log_call
+from _init.env_vars_globs import load_param
 
 try:
     from PyYAML import yaml
@@ -91,7 +91,7 @@ def assert_file(config_file):
     return config_file
 
 
-@_log_call
+# @_log_call
 def load_config(config_file):
     """Load configuration from a YAML file."""
     assert_file(config_file)
@@ -100,7 +100,7 @@ def load_config(config_file):
     return config
 
 
-@_log_call
+#@_log_call
 def save_defaults_to_yaml(file_path):
     """Save default configuration settings to a YAML file."""
     defaults = {
@@ -114,12 +114,12 @@ def save_defaults_to_yaml(file_path):
         yaml.dump(defaults, f, default_flow_style=False)
 
 
-@_log_call
+#@_log_call
 def set_env_var(env_var_name: str, val: Any = None):
     os.environ[env_var_name] = (value := val or env_var_name)
     logging.debug(f"# Env var <{env_var_name}> set to <{value}>")
 
 
-@_log_call
+#@_log_call
 def is_env_vars_inited():
     return bool(os.getenv('TOKEN', ''))

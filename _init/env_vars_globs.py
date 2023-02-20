@@ -92,7 +92,7 @@ def _log_call(func=None, *, with_call_stack=CONF._log_call_with_call_stack,
     return wrapper
 
 
-@_log_call
+# @_log_call
 # /Users/user/github.com/hnkovr/`MyPrjsReview1/my_fastapi_app/heroky/yaml_loader.py
 def load_param(
         yaml_file_path,
@@ -154,7 +154,7 @@ def load_param(
 
 
 if __name__ == '__main__':
-    @_log_call
+    #@_log_call
     def add(x: int, y: int) -> int:
         """
         Adds two numbers and returns the result.
@@ -187,7 +187,7 @@ def assert_globs():
     )
 
 
-@_log_call
+#@_log_call
 def is_it_on_heroku_running():
     hostname = socket.gethostname()
     print("Hostname:", hostname)

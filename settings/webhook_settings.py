@@ -4,7 +4,6 @@ import os
 from loguru import logger as log
 
 from _init.conf import TOKEN
-from _init.env_vars_globs import _log_call
 from . import CONF
 
 # Application name
@@ -21,7 +20,7 @@ WEBAPP_PORT = os.getenv('PORT', default=8000)
 
 
 @log.catch
-@_log_call(with_call_stack=True)
+# @_log_call(with_call_stack=True)
 def __set_local_env_vars(*, raise_exc=CONF.RAISE_IF_ENV_VAR_NOT_SET):
     # Сhecking for the existence of a variable
     if (
