@@ -78,7 +78,7 @@ class TelegramBot:
     #     return corrected_text
 
     ##@handle_cant_parse_entities_exception
-    def send_message(self, chat_id: int, text: str, auto_correct: bool = False) -> None:
+    async def send_message(self, chat_id: int, text: str, auto_correct: bool = False) -> None:
         """
         Sends a message to a Telegram chat using the specified bot token and chat ID, with optional auto-correction or
         error raising.

@@ -16,8 +16,8 @@ async def sleep(sleep_time: int, descr: str = ''):
         log.info(f"Sleep for {sleep_time}..{f' ({descr})' if descr else ''}")
         await asyncio.sleep(sleep_time)
     except:
-        log.exception(f"# fixme")
-        await asyncio.sleep(60)
+        log.exception(f"# fixme: {sleep_time=}")
+        await asyncio.sleep(30)
 
 
 def get_var(var_name: str, default: Any = None,

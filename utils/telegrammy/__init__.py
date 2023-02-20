@@ -12,7 +12,7 @@ if CONF.INIT_TelegramBot:
 # send_message = telegramBot.send_message_handled
 
 @log_call
-def send_photo(*a, **k):
+async def send_photo(*a, **k):
     await telegramBot.send_photo_handled(
         *a,
         parse_mode="Markdown",
@@ -21,7 +21,7 @@ def send_photo(*a, **k):
 
 
 @log_call
-def send_message(*a, **k):
+async def send_message(*a, **k):
     await telegramBot.send_message_handled(
         *a,
         # parse_mode="Markdown",
