@@ -8,16 +8,23 @@ from utils.telegrammy.telegram_bot import TelegramBot
 if CONF.INIT_TelegramBot:
     telegramBot = TelegramBot(TOKEN)
 
-send_message = telegramBot.send_message_handled
-
-
 ##send_photo = telegramBot.send_photo_handled
+# send_message = telegramBot.send_message_handled
 
 @log_call
 def send_photo(*a, **k):
-    async telegramBot.send_photo_handled(
+    await telegramBot.send_photo_handled(
         *a,
         parse_mode="Markdown",
+        auto_correct=CONF.AUTO_CORRECT,
+        **k)
+
+
+@log_call
+def send_message(*a, **k):
+    await telegramBot.send_message_handled(
+        *a,
+        # parse_mode="Markdown",
         auto_correct=CONF.AUTO_CORRECT,
         **k)
 

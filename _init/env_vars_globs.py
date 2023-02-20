@@ -64,6 +64,9 @@ def _log_call(func=None, *, with_call_stack=CONF._log_call_with_call_stack,
                 funcname = frame.function
                 if (filename in get_project_files_names()
                         and funcname not in 'wrapper '.split()
+                        and not (  # todo: optimize
+                                'wrapper' in funcname
+                        )
                 ):
                     frame_info.append(f"{filename}:{lineno}:{funcname}")
         call_stack_info = ' -> '.join(frame_info) + ' -> ' if with_call_stack else ''
@@ -170,7 +173,7 @@ if __name__ == '__main__':
     doctest.testmod()
 
 
-@_log_call
+# @_log_call
 def assert_globs():
     from _init import conf
     from _init import assert_all
