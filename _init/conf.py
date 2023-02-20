@@ -5,7 +5,7 @@ from _init.env_vars_globs import _log_call
 from settings import check_globs
 
 TOKEN: str = None
-APP_NAME: str = None
+HEROKU_APP_NAME: str = None
 DEBUG: str = None
 PORT: int = None
 TIMEOUT: int = None

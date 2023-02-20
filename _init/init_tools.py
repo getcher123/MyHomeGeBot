@@ -39,7 +39,7 @@ def print_env_vars():
 
 class Defaults:
     """Default configuration settings."""
-    APP_NAME = '<APP_NAME>'
+    HEROKU_APP_NAME = '<HEROKU_APP_NAME>'
     YAML_CONFIG_FNAME = 'config.yml'
     DEBUG = True
     PORT = 'WEBAPP_PORT'
@@ -68,7 +68,7 @@ def get_def(name, *, yaml_fname: str = Defaults.YAML_CONFIG_FNAME):
 def parse_args(*, yaml_fname: str = Defaults.YAML_CONFIG_FNAME,
                ):
     """Parse command line arguments."""
-    APP_NAME, TOKEN, PORT, DEBUG, TIMEOUT = 'APP_NAME,TOKEN,PORT,DEBUG,TIMEOUT'.split(',')
+    HEROKU_APP_NAME, TOKEN, PORT, DEBUG, TIMEOUT = 'HEROKU_APP_NAME,TOKEN,PORT,DEBUG,TIMEOUT'.split(',')
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--config", type=str, default=yaml_fname,
@@ -79,7 +79,7 @@ def parse_args(*, yaml_fname: str = Defaults.YAML_CONFIG_FNAME,
                         help="Port number to use for the webhook server")
     parser.add_argument("--token", type=str, default=get_def(TOKEN),
                         help="Telegram Bot API token")
-    parser.add_argument("--app_name", type=str, default=get_def(APP_NAME),
+    parser.add_argument("--app_name", type=str, default=get_def(HEROKU_APP_NAME),
                         help="Heroku app name")
     parser.add_argument("--timeout", type=int, default=get_def(TIMEOUT),
                         help="Heroku app name")
@@ -107,7 +107,7 @@ def save_defaults_to_yaml(file_path):
         "debug": Defaults.DEBUG,
         "port": Defaults.PORT,
         "token": Defaults.TOKEN,
-        "app_name": Defaults.APP_NAME,
+        "app_name": Defaults.HEROKU_APP_NAME,
         "TIMEOUT": 30,
     }
     with open(file_path, "w") as f:

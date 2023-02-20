@@ -175,12 +175,12 @@ def assert_globs():
     from _init import conf
     from _init import assert_all
     assert_all(
-        conf.APP_NAME,
+        conf.HEROKU_APP_NAME,
         conf.TOKEN,
         conf.DEBUG,
         conf.PORT,
         conf.TIMEOUT,
-        args='APP_NAME TOKEN DEBUG PORT TIMEOUT'.split()
+        args='HEROKU_APP_NAME TOKEN DEBUG PORT TIMEOUT'.split()
     )
 
 

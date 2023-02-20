@@ -10,8 +10,8 @@ async def on_startup(
         dispatcher
 ) -> None:
     assert dispatcher
-    from main import bot, dp
-    assert all((bot, dp))
+    from tg_bot import dp, bot
+    assert all((bot, dp)), (bot, dp)
 
     await bot.set_webhook(WEBHOOK_URL, drop_pending_updates=True)
     await bot.set_my_commands(commands)
@@ -23,7 +23,7 @@ async def on_startup(
 async def on_shutdown(
         dispatcher
 ) -> None:
-    from main import bot
+    from tg_bot import bot
     assert bot
     await bot.delete_webhook()
 

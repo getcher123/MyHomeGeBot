@@ -5,6 +5,7 @@ from typing import Tuple, Optional
 import aiogram.utils
 import aiogram.utils.exceptions
 
+import tg_bot
 from utils.telegrammy import send_message
 
 
@@ -56,7 +57,8 @@ class TelegramErrorHandler:
                 caption_text = cls.fix_caption_text(update.message.caption)
             else:
                 caption_text = update.message.caption
-            await context.bot.send_photo(chat_id=update.effective_chat.id, photo=update.message.photo[-1].file_id, caption=caption_text)
+            await tg_bot.bot.send_photo(chat_id=update.effective_chat.id, photo=update.message.photo[-1].file_id,
+                                        caption=caption_text)
         except aiogram.utils.exceptions.CantParseEntities as e:
             reason, _ = cls.determine_error_reason(str(e), e)
             ##? await context.bot.send_message(chat_id=update.effective_chat.id, text=reason)

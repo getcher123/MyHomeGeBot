@@ -97,7 +97,7 @@ def init_globs():
 @_log_call
 def init_globals_by_args(args):
     log.info("""# Declaring and initializing bot and dispatcher objects""")
-    conf.APP_NAME = args.app_name
+    conf.HEROKU_APP_NAME = args.app_name
     conf.TOKEN = args.token
     conf.DEBUG = args.debug
     conf.PORT = args.port
@@ -111,20 +111,7 @@ def init_globals():
     conf.DEBUG = os.getenv('DEBUG')
     conf.PORT = os.getenv('PORT')
     conf.TIMEOUT = os.getenv('TIMEOUT')
-    conf.APP_NAME = os.getenv('HEROKU_APP_NAME')
+    conf.HEROKU_APP_NAME = os.getenv('HEROKU_APP_NAME')
     assert_globs()
 
 
-@_log_call
-def init_bot():
-    log.info(f"🤖 Init bot!..")
-    global bot, storage, dp
-    assert conf.TOKEN, f"TOKEN is empty!"
-
-    bot = Bot(token=conf.TOKEN)
-    storage = MemoryStorage()
-    dp = Dispatcher(bot, storage=storage)
-
-    assert_all(bot, storage, dp)
-
-    return bot, storage, dp
