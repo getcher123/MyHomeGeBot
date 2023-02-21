@@ -13,6 +13,7 @@ from _init import init_globals_by_env_vars, assert_globs, parse_args
 from _init.after_init import set_commands
 # from _init.env_vars_globs import is_it_on_heroku_running
 from _init.asserts import get_env_vars_dict
+from _init.env_vars_globs import is_it_on_heroku_running
 from bot.handlers import common
 from settings import CONF
 from settings.webhook_settings import (WEBHOOK_PATH, WEBAPP_HOST, WEBAPP_PORT)
@@ -34,9 +35,10 @@ def main_regular() -> None:
     if not is_evn_vars_set():
         utils.warn(f"not is_evn_vars_set():..")
 
-    _init.env_vars.env_setdefaults_by_args(
-        args=parse_args()
-    )
+    if is_it_on_heroku_running():
+        _init.env_vars.env_setdefaults_by_args(
+            args=parse_args()
+        )
     init_globals_by_env_vars()
     assert_globs()
 

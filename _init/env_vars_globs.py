@@ -8,8 +8,8 @@ from typing import Any, Optional
 
 from loguru import logger as log
 
-from _init import conf
 from settings import CONF
+from . import globals as conf
 
 # from _init_tools import assert_all
 # conf
