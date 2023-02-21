@@ -201,7 +201,7 @@ def get_globs(): return dict(zip(
 def assert_globs():
     from _init import assert_all
     assert_all(
-        get_globs_values(),
+        **get_globs_values(),
         args=get_globs_names(),
         trace=True,
     )
