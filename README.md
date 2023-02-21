@@ -1,10 +1,25 @@
 ... # todo: write smth 😁
 
+# Common infa
+
 ## Links
 
-* https://github.com/getcher123/MyHomeGeBot/tree/dev
-* https://github.com/getcher123/MyHomeGeBot/tree/main
-* https://github.com/getcher123/MyHomeGeBot.git
+### GitHub:
+
+* repo: https://github.com/getcher123/MyHomeGeBot.git
+* dev: https://github.com/getcher123/MyHomeGeBot/tree/dev
+* main: https://github.com/getcher123/MyHomeGeBot/tree/main
+
+### Heroku:
+
+* Logs of dev-app execution: https://dashboard.heroku.com/apps/myhomegebot-dev/logs
+* Deploy: https://dashboard.heroku.com/apps/myhomegebot-dev/deploy
+  *?
+  metrics: https://dashboard.heroku.com/apps/myhomegebot-dev/metrics/web?ending=undefined-hours-ago&starting=undefined-hours-ago
+  ** activity: https://dashboard.heroku.com/apps/myhomegebot-dev/activity
+* resources: https://dashboard.heroku.com/apps/myhomegebot-dev/resources
+* settings: https://dashboard.heroku.com/apps/myhomegebot-dev/settings
+*
 
 ## Running on your PC 🚀
 
@@ -13,7 +28,7 @@
    ```shell
    git clone https://github.com/AlexanderKorataev/aiogram-bot-template.git
    ```
-  
+
 2. **Create a virtual environment.**
 
    ```shell

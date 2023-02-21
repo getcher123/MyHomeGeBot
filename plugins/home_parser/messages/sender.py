@@ -8,10 +8,10 @@ from aiogram.dispatcher import Dispatcher
 
 from plugins.home_parser import MyHomeParser
 from plugins.home_parser.messages.msg_txt_creator import get_msg_txt
-from settings.conf import CONF
 from utils import log
 
 
+@log.catch
 async def send_messages(p: MyHomeParser, dp: Union[Dispatcher, types.Message]):
     this = send_messages.__name__
     try:
@@ -35,6 +35,8 @@ async def send_messages(p: MyHomeParser, dp: Union[Dispatcher, types.Message]):
                     image_bytes_copy = BytesIO(response.content)
                     image_bytes_copy.seek(0)
 
+                    from settings.config import CONF
+
                     if CONF.USE_SEND_PHOTO_WRAPPER:
                         # assert telegramBot
                         # await telegramBot.send_photo(
@@ -49,7 +51,9 @@ async def send_messages(p: MyHomeParser, dp: Union[Dispatcher, types.Message]):
 
                 except Exception as e:
                     ##log.exception(f'Error while sending msg: {shorten(msg, 333)}')
-                    log.error(f'## Error while sending msg:\n\n{msg}\n\n\n')
+                    log.error(f'## Error while sending msg:\n\n<'
+                              f'{msg if msg else "None" if msg is None else "?"}'
+                              '>\n\n\n')
                     raise
     except:
         log.exception(f"## Global exception in {this}!")

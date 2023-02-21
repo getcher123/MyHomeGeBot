@@ -2,6 +2,9 @@ import asyncio
 import os
 from textwrap import shorten
 from typing import Any
+from warnings import warn
+
+warn(f"warn'd be wrapped!?..")
 
 # import logging as log
 from .logs import log

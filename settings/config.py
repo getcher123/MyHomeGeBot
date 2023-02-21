@@ -1,4 +1,5 @@
 class CONF:
+    IGNORE_LOCAL_START_HEROKU_CONF = True
     IS_DEBUG = True
     # USE_OLD_STYLED_MSG_FMT = True  # ..
     USE_OLD_STYLED_MSG_FMT = False  # ..

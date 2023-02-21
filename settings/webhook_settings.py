@@ -3,7 +3,8 @@ import os
 
 from loguru import logger as log
 
-from _init.conf import TOKEN
+import utils
+from _init.globals import TOKEN
 from . import CONF
 
 # Application name
@@ -34,4 +35,5 @@ def __set_local_env_vars(*, raise_exc=CONF.RAISE_IF_ENV_VAR_NOT_SET):
         if raise_exc:
             raise Exception(msg)
         else:
+            utils.warn('exit:');
             exit()

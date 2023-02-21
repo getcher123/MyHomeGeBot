@@ -20,5 +20,5 @@
 #     # # # Сhecking for the existence of a variable
 #     # # if not TOKEN:
 #     # #     logging.error("not TOKEN!")
-#     # #     exit()
+#     # #     utils.warn('exit:'); exit()
 #     # check_globs('TOKEN', TOKEN)

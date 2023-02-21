@@ -3,7 +3,8 @@ from typing import Any
 
 from loguru import logger as log
 
-from settings.conf import CONF
+import utils
+from settings.config import CONF
 
 
 @log.catch
@@ -14,6 +15,7 @@ def check_globs(name, val, *, exit_if_not_set=CONF.EXIT_IF_ENV_VAR_NOT_SET):
         msg = f"not {name}!"
         log.error(msg)
         if exit_if_not_set:
+            utils.warn('exit:');
             exit()
         else:
             raise Exception(msg)

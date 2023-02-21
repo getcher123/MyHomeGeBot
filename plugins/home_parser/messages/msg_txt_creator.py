@@ -148,6 +148,9 @@ def get_msg_txt(p: MyHomeParser, url: Url, i: int, *,
         except Exception as e:
             log.exception(f"Fatal exception in {get_msg_txt.__name__}")
             add_info = str(e)
+            log.debug(
+                f"#e: {CONF.USE_OLD_STYLED_MSG_FMT_WHEN_NEW_FAILED = }"
+                f"; {CONF.USE_OLD_STYLED_MSG_FMT = }")
             if CONF.USE_OLD_STYLED_MSG_FMT_WHEN_NEW_FAILED:
                 CONF.USE_OLD_STYLED_MSG_FMT = True
 

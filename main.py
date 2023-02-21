@@ -7,9 +7,12 @@
 
 from aiogram.utils.executor import start_webhook
 
+import _init.asserts
 import tg_bot
-from _init import set_commands, init_globals, assert_globs
-from _init.env_vars_globs import is_it_on_heroku_running
+from _init import init_globals_by_env_vars, assert_globs, parse_args
+from _init.after_init import set_commands
+# from _init.env_vars_globs import is_it_on_heroku_running
+from _init.asserts import get_env_vars_dict
 from bot.handlers import common
 from settings import CONF
 from settings.webhook_settings import (WEBHOOK_PATH, WEBAPP_HOST, WEBAPP_PORT)
@@ -18,8 +21,23 @@ from utils import init_logging, getLogger, log
 
 logger = getLogger(__name__)
 
+
+def is_evn_vars_set():
+    return all(get_env_vars_dict().values())
+    ##?r return os.getenv('TOKEN')
+
+
+@log.catch
 def main_regular() -> None:
-    init_globals()
+    import utils
+
+    if not is_evn_vars_set():
+        utils.warn(f"not is_evn_vars_set():..")
+
+    _init.env_vars.env_setdefaults_by_args(
+        args=parse_args()
+    )
+    init_globals_by_env_vars()
     assert_globs()
 
     init_logging()
@@ -47,6 +65,7 @@ def main_regular() -> None:
 
 
 def main():
+    from _init.initools import is_it_on_heroku_running
     assert is_it_on_heroku_running()
 
     if is_it_on_heroku_running():
