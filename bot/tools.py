@@ -15,4 +15,5 @@ def reg_bot_commands(res_commands: List[TelegramObject] = [], **commands):
         )
         logging.debug(f"Added bot command {command}: {shorten(description, 1111)}")
     logging.debug(f"#2 {commands = }")
+    logging.info(f"#2.1 {commands = }")
     return res_commands

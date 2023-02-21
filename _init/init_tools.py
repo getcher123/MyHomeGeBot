@@ -6,7 +6,7 @@ from typing import Any
 
 from loguru import logger as log
 
-from _init.env_vars_globs import load_param
+from _init.env_vars_globs import load_param, _log_call
 
 try:
     from PyYAML import yaml
@@ -17,8 +17,7 @@ except ImportError as e:
     except ImportError as e:
         log.warning(f"? {e}")
 
-
-
+csv = str
 g_env_vars = dict()
 print_env_vars_cnt = 0
 
@@ -45,6 +44,8 @@ class Defaults:
     PORT = 'WEBAPP_PORT'
     TIMEOUT = 45
 
+    # USER_IDS =
+
     def get(self, name):
         """
         >>> Defaults().get('TEST123')
@@ -68,7 +69,8 @@ def get_def(name, *, yaml_fname: str = Defaults.YAML_CONFIG_FNAME):
 def parse_args(*, yaml_fname: str = Defaults.YAML_CONFIG_FNAME,
                ):
     """Parse command line arguments."""
-    HEROKU_APP_NAME, TOKEN, PORT, DEBUG, TIMEOUT = 'HEROKU_APP_NAME,TOKEN,PORT,DEBUG,TIMEOUT'.split(',')
+    HEROKU_APP_NAME, TOKEN, PORT, DEBUG, TIMEOUT, USER_IDS = 'HEROKU_APP_NAME,TOKEN,PORT,DEBUG,TIMEOUT,USER_IDS'.split(
+        ',')
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--config", type=str, default=yaml_fname,
@@ -83,6 +85,9 @@ def parse_args(*, yaml_fname: str = Defaults.YAML_CONFIG_FNAME,
                         help="Heroku app name")
     parser.add_argument("--timeout", type=int, default=get_def(TIMEOUT),
                         help="Heroku app name")
+    parser.add_argument("--USER_IDS", type=csv, default=get_def(USER_IDS),
+                        help="<USER_IDS>")
+
     return parser.parse_args()
 
 
@@ -114,12 +119,32 @@ def save_defaults_to_yaml(file_path):
         yaml.dump(defaults, f, default_flow_style=False)
 
 
-#@_log_call
+# @_log_call
 def set_env_var(env_var_name: str, val: Any = None):
     os.environ[env_var_name] = (value := val or env_var_name)
     logging.debug(f"# Env var <{env_var_name}> set to <{value}>")
 
 
-#@_log_call
-def is_env_vars_inited():
-    return bool(os.getenv('TOKEN', ''))
+def all_(*a, args=None, print=print):
+    if not all(a):
+        print(f"Not all! {f'{args}:' if args else ''} {a}")
+    return all(a)
+    # if all(a): return a
+    # else:
+    #     log.debug()
+
+
+@_log_call
+def is_env_vars_inited(evn_vars_ssv='TOKEN USER_IDS', trace=True):
+    return bool(os.getenv('TOKEN'))
+    # todo: test 1st:
+    return all_([
+        (bool(os.getenv(a, '')),
+         (print if trace else lambda _: _)
+             (
+             f"{a = }; "
+             f"{bool(os.getenv(a, '')) = }; "
+         )
+         )[0]
+        for a in evn_vars_ssv.split()
+    ])

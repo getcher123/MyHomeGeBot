@@ -6,6 +6,7 @@ import re
 from typing import Dict, Tuple
 
 from plugins.home_parser import MyHomeParser
+from settings import CONF
 from utils import log, log_call
 
 Url = str
@@ -107,50 +108,51 @@ def get_tags_4_price(price_val: int, *, max_=1000):
 def get_msg_txt(p: MyHomeParser, url: Url, i: int, *,
                 prop_sep='     ',
                 ):
-    title = p.description['title'][i]
-    price = p.description['price'][i]
-    square = p.description['square'][i]
-    stairs = p.description['stairs'][i]
-    address = p.description['address'][i]
+    if CONF.USE_OLD_STYLED_MSG_FMT:
+        return f"**[{p.description['title'][i]}]({url})** - \n*${p.description['price'][i]}*     {p.description['square'][i]}     {p.description['stairs'][i]} \n{p.description['address'][i]}"
+    else:
+        title = p.description['title'][i]
+        price = p.description['price'][i]
+        square = p.description['square'][i]
+        stairs = p.description['stairs'][i]
+        address = p.description['address'][i]
 
-    title = title
+        title = title
 
-    price = price
-    square = square.replace('.00', '')
-    stairs = stairs.replace('Этаж', 'эт.')
-    address = (address
-               .replace(', Батуми', '')
-               .replace(', Аджара', '')
-               )
-    if title == 'Сдается в аренду новопостроенная квартира':
-        address, title = '', address
+        price = price
+        square = square.replace('.00', '')
+        stairs = stairs.replace('Этаж', 'эт.')
+        address = (address
+                   .replace(', Батуми', '')
+                   .replace(', Аджара', '')
+                   )
+        if title == 'Сдается в аренду новопостроенная квартира':
+            address, title = '', address
 
-    # i msg = f"**[{p.description['title'][i]}]({var_val})** - \n*${p.description['price'][i]}*     {p.description['square'][i]}     {p.description['stairs'][i]} \n{p.description['address'][i]}"
-    full_descr_info = (f"**[{title}]({url})** -"
-                       f" \n"
-                       f"*${price}*"
-                       f"{prop_sep}{square}"
-                       f"{prop_sep}{stairs}"
-                       f" \n"
-                       f"{address}")
+        full_descr_info = (f"**[{title}]({url})** -"
+                           f" \n"
+                           f"*${price}*"
+                           f"{prop_sep}{square}"
+                           f"{prop_sep}{stairs}"
+                           f" \n"
+                           f"{address}")
 
-    try:
-        tags_txt = get_tags_txt(full_descr_info, price=price, address=address)
-        price2square_info = get_price_2_sqr_val(price, square)
-        add_info = (
-            f"\n"
-            #e1 f"price-to-square: {price2square_info}"
-            f"\n"
-            f"{tags_txt}"
-        )
-    except Exception as e:
-        log.exception(f"Fatal exception in {get_msg_txt.__name__}")
-        add_info = str(e)
+        try:
+            tags_txt = get_tags_txt(full_descr_info, price=price, address=address)
+            add_info = (
+                f"\n"
+                # e1 f"price-to-square: {price2square_info := get_price_2_sqr_val(price, square)}"
+                f"\n"
+                f"{tags_txt}"
+            )
+        except Exception as e:
+            log.exception(f"Fatal exception in {get_msg_txt.__name__}")
+            add_info = str(e)
 
-    return check_text_4_bot(f"{full_descr_info}"
-                            f" \n"
-                            f"{add_info}"
-                            )
+        return check_text_4_bot(f"{full_descr_info}"
+                                f" \n"
+                                f"{add_info}"
+                                )
 
 
 def check_text_4_bot(text: str) -> str:

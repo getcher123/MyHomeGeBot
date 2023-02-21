@@ -8,6 +8,7 @@ from typing import Any, Optional
 
 from loguru import logger as log
 
+from _init import conf
 from settings import CONF
 
 # from _init_tools import assert_all
@@ -40,6 +41,7 @@ def fmt_txt(e):
     return e if not '\n' in e else f"\n{e}\n"
 
 
+@log.catch
 def _log_call(func=None, *, with_call_stack=CONF._log_call_with_call_stack,
               print=log.debug, print_exc=True,
               ):
@@ -81,6 +83,7 @@ def _log_call(func=None, *, with_call_stack=CONF._log_call_with_call_stack,
             traceback.print_exc() if print_exc else log.exception(
                 f"In {_log_call.__name__}({func.__name__}):.."
             )
+            log.catch()
             raise
 
         if result is not None or with_call_stack:
@@ -173,21 +176,38 @@ if __name__ == '__main__':
     doctest.testmod()
 
 
+def get_globs_values(): return (
+    conf.HEROKU_APP_NAME,
+    conf.TOKEN,
+    conf.DEBUG,
+    conf.PORT,
+    conf.TIMEOUT,
+    conf.USER_IDS,
+)
+
+
+def get_globs_names(): return (
+    'HEROKU_APP_NAME TOKEN DEBUG PORT TIMEOUT USER_IDS'.split()
+)
+
+
+def get_globs(): return dict(zip(
+    get_globs_names(),
+    get_globs_values(),
+))
+
+
 # @_log_call
 def assert_globs():
-    from _init import conf
     from _init import assert_all
     assert_all(
-        conf.HEROKU_APP_NAME,
-        conf.TOKEN,
-        conf.DEBUG,
-        conf.PORT,
-        conf.TIMEOUT,
-        args='HEROKU_APP_NAME TOKEN DEBUG PORT TIMEOUT'.split()
+        get_globs_values(),
+        args=get_globs_names(),
+        trace=True,
     )
 
 
-#@_log_call
+@_log_call
 def is_it_on_heroku_running():
     hostname = socket.gethostname()
     print("Hostname:", hostname)

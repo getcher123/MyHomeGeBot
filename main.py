@@ -47,10 +47,12 @@ def main_regular() -> None:
 
 
 def main():
+    assert is_it_on_heroku_running()
+
     if is_it_on_heroku_running():
         main_regular()
     else:
-        from polling import init_local_run
+        from _init.init_main import init_local_run
         init_local_run()
 
 

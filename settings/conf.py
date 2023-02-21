@@ -1,4 +1,6 @@
 class CONF:
+    IS_DEBUG = True
+    USE_OLD_STYLED_MSG_FMT = True  # ..
     LAPTOP_LOCALHOST_NAME = "users-MacBook-Pro.local"
     RAISE_IF_ENV_VAR_NOT_SET = True
     EXIT_IF_ENV_VAR_NOT_SET = True

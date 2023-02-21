@@ -3,6 +3,7 @@
 ## Links
 
 * https://github.com/getcher123/MyHomeGeBot/tree/dev
+* https://github.com/getcher123/MyHomeGeBot/tree/main
 * https://github.com/getcher123/MyHomeGeBot.git
 
 ## Running on your PC 🚀

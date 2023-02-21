@@ -6,9 +6,9 @@ from .common import shorten
 from .logs import log, logging, init_logging, logger, getLogger
 from .logs.calls_logger import log_call
 
+logd = print
 # print = log.info
 print = logger.info
-
 __all__ = [
     'log',
     'logger',

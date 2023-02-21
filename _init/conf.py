@@ -9,7 +9,7 @@ DEBUG: str = 'None'
 PORT: int = None
 TIMEOUT: int = None
 LOGGING_LEVEL: int = 10
-
+USER_IDS: str = '???,xxx'
 
 class Globals:
     def __init__(self,

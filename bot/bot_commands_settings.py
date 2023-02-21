@@ -1,4 +1,5 @@
 """Configuring commands displayed in the Telegram interface"""
+from pprint import pprint
 
 from bot.tools import reg_bot_commands
 
@@ -10,3 +11,6 @@ commands = reg_bot_commands(
     cancel='отменить действие',
     show_link='Посмотреть текущую ссылку для поиска',
 )
+
+# print(f"# {commands = }")
+pprint(commands)
