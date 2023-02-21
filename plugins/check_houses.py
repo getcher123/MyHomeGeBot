@@ -3,14 +3,10 @@ import logging
 import os
 from io import BytesIO
 
-
 import requests
 from aiogram.dispatcher import Dispatcher
 
 from home_parser import MyHomeParser
-from settings.debug_settings import LOGGING_LEVEL
-
-logging.basicConfig(level=LOGGING_LEVEL)
 
 first_time: bool
 
